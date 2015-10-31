@@ -5,4 +5,9 @@
     <string name="child_button">CHILD</string>
     <string name="teacher_button">TEACHER</string>
     <string name="info_button">INFO</string>
+    <string name="select_mode">Choose a mode…</string>
+    <string name="content_description_adult">Adult Icon</string>
+    <string name="content_description_child">CHild Icon</string>
+    <string name="content_description_teacher">Teacher Icon</string>
+    <string name="content_description_info">Info Icon</string>
 </resources>
