@@ -10,4 +10,14 @@
     <string name="content_description_child">CHild Icon</string>
     <string name="content_description_teacher">Teacher Icon</string>
     <string name="content_description_info">Info Icon</string>
+    <string name="title_activity_info">INFO</string>
+    <string name="developers_title">Developers</string>
+    <string name="developers_paragraph">Alexandra Wiseman\nDaniel Morgan\nTyler Carr-Braint</string>
+    <string name="credits_title">Credits</string>
+    <string name="bullet">\u2022</string>
+    <string name="credit_teacher_icon">"Teach" Icon made by Freepik from www.flaticon.com is licensed under CC BY 3.0</string>
+    <string name="credit_child_icon">"Jumping man" Icon made by Freepik from www.flaticon.com is licensed under CC BY 3.0</string>
+    <string name="credit_adult_icon">"Black user shape" Icon made by Freepik from www.flaticon.com is licensed under CC BY 3.0</string>
+    <string name="credit_info_icon">"Info sign" Icon made by Daniel Bruce from www.flaticon.com is licensed under CC BY 3.0</string>
+    <string name="credit_arrow_icon">"Left arrow angle" Icon made by Freepik from www.flaticon.com is licensed under CC BY 3.0</string>
 </resources>

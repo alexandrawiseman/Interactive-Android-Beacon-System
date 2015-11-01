@@ -1,6 +1,7 @@
 package com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -97,6 +98,16 @@ public class MainMenu extends Activity
                 }
 
                 return false;
+            }
+        });
+
+        mInfoButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent infoIntent = new Intent(MainMenu.this, InfoActivity.class);
+                startActivity(infoIntent);
             }
         });
 

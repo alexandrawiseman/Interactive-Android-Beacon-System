@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/main_menu_background">
+
+        <Button
+            android:id="@+id/info_back_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_activity_info"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@color/main_menu_background"
+            android:drawableLeft="@drawable/back_arrow"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/developers_title"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <View
+                    android:layout_height="2dp"
+                    android:layout_width="match_parent"
+                    android:background="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:text="@string/developers_paragraph"
+                    android:textColor="#000000"
+                    android:textSize="17sp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/credits_title"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <View
+                    android:layout_height="2dp"
+                    android:layout_width="match_parent"
+                    android:background="#000000" />
+
+                <TableLayout android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:stretchColumns="3"
+                             android:paddingTop="5dp">
+
+                    <TableRow>
+                        <TextView
+                            android:layout_column="1"
+                            android:text="@string/bullet"
+                            android:padding="3dip"
+                            android:textColor="#000000"/>
+                        <TextView
+                            android:text="@string/credit_adult_icon"
+                            android:padding="3dip"
+                            android:layout_weight="1"
+                            android:textColor="#000000"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:layout_column="1"
+                            android:text="@string/bullet"
+                            android:padding="3dip"
+                            android:textColor="#000000"/>
+                        <TextView
+                            android:text="@string/credit_child_icon"
+                            android:padding="3dip"
+                            android:layout_weight="1"
+                            android:textColor="#000000"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:layout_column="1"
+                            android:text="@string/bullet"
+                            android:padding="3dip"
+                            android:textColor="#000000"/>
+                        <TextView
+                            android:text="@string/credit_teacher_icon"
+                            android:padding="3dip"
+                            android:layout_weight="1"
+                            android:textColor="#000000"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:layout_column="1"
+                            android:text="@string/bullet"
+                            android:padding="3dip"
+                            android:textColor="#000000"/>
+                        <TextView
+                            android:text="@string/credit_info_icon"
+                            android:padding="3dip"
+                            android:layout_weight="1"
+                            android:textColor="#000000"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:layout_column="1"
+                            android:text="@string/bullet"
+                            android:padding="3dip"
+                            android:textColor="#000000"/>
+                        <TextView
+                            android:text="@string/credit_arrow_icon"
+                            android:padding="3dip"
+                            android:layout_weight="1"
+                            android:textColor="#000000"/>
+                    </TableRow>
+
+                </TableLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
