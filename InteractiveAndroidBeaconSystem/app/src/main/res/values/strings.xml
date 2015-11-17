@@ -7,7 +7,7 @@
     <string name="info_button">INFO</string>
     <string name="select_mode">Choose a mode…</string>
     <string name="content_description_adult">Adult Icon</string>
-    <string name="content_description_child">CHild Icon</string>
+    <string name="content_description_child">Child Icon</string>
     <string name="content_description_teacher">Teacher Icon</string>
     <string name="content_description_info">Info Icon</string>
     <string name="title_activity_info">INFO</string>
@@ -20,4 +20,9 @@
     <string name="credit_adult_icon">"Black user shape" Icon made by Freepik from www.flaticon.com is licensed under CC BY 3.0</string>
     <string name="credit_info_icon">"Info sign" Icon made by Daniel Bruce from www.flaticon.com is licensed under CC BY 3.0</string>
     <string name="credit_arrow_icon">"Left arrow angle" Icon made by Freepik from www.flaticon.com is licensed under CC BY 3.0</string>
+    <string name="credit_planets_icons">"Earth vector" designed by Freepik</string>
+    <string name="title_activity_planet">PlanetActivity</string>
+    <string name="submit_activity_planet">Submit</string>
+    <string name="clear_activity_planet">Clear</string>
+    <string name="instructions_activity_planet">Select the planets in order from the sun.</string>
 </resources>

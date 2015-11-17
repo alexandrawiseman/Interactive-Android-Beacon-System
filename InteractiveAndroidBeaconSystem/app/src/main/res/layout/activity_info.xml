@@ -161,6 +161,19 @@
                             android:textColor="#000000"/>
                     </TableRow>
 
+                    <TableRow>
+                        <TextView
+                            android:layout_column="1"
+                            android:text="@string/bullet"
+                            android:padding="3dip"
+                            android:textColor="#000000"/>
+                        <TextView
+                            android:text="@string/credit_planets_icons"
+                            android:padding="3dip"
+                            android:layout_weight="1"
+                            android:textColor="#000000"/>
+                    </TableRow>
+
                 </TableLayout>
 
             </LinearLayout>

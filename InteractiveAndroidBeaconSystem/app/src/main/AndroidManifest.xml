@@ -19,7 +19,16 @@
         <activity
             android:name=".InfoActivity"
             android:label="@string/title_activity_info"
-            android:parentActivityName=".MainMenu">
+            android:parentActivityName=".MainMenu" >
+        </activity>
+        <activity
+            android:name=".PlanetActivity"
+            android:label="@string/title_activity_planet"
+            android:parentActivityName=".MainMenu"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem.MainMenu" />
         </activity>
     </application>
 

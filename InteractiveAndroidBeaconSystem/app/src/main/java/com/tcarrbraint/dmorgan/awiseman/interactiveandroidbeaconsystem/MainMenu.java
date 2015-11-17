@@ -61,6 +61,16 @@ public class MainMenu extends Activity
             }
         });
 
+        mChildButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent planetIntent = new Intent(MainMenu.this, PlanetActivity.class);
+                startActivity(planetIntent);
+            }
+        });
+
         mTeacherButton = (ImageButton) findViewById(R.id.teacherButton);
         mTeacherButton.setOnTouchListener(new View.OnTouchListener()
         {
