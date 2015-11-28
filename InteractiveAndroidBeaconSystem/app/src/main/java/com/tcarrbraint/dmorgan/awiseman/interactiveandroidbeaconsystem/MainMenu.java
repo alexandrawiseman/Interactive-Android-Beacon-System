@@ -66,8 +66,11 @@ public class MainMenu extends Activity
             @Override
             public void onClick(View v)
             {
-                Intent planetIntent = new Intent(MainMenu.this, PlanetActivity.class);
-                startActivity(planetIntent);
+                //Intent planetIntent = new Intent(MainMenu.this, PlanetActivity.class);
+                //startActivity(planetIntent);
+
+                Intent cameraIntent = new Intent(MainMenu.this, CameraInstructionActivity.class);
+                startActivity(cameraIntent);
             }
         });
 
