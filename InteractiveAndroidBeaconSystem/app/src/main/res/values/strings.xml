@@ -25,4 +25,12 @@
     <string name="submit_activity_planet">Submit</string>
     <string name="clear_activity_planet">Clear</string>
     <string name="instructions_activity_planet">Select the planets in order from the sun.</string>
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="title_activity_camera_submit">CameraSubmitActivity</string>
+    <string name="credit_statue">"Statue of Liberty" designed by Thomas Arhelger via www.freeimages.com</string>
+    <string name="camera_instructions">Take a selfie with the statue of liberty.</string>
+    <string name="camera_begin">BEGIN</string>
+    <string name="camera_submit">SUBMIT</string>
+    <string name="camera_redo">REDO</string>
+    <string name="camera_take_picture">Take Picture</string>
 </resources>
