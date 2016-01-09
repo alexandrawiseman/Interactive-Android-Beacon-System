@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem">
+    package="com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem" >
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -17,10 +17,10 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
+        android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
         <activity
             android:name=".MainMenu"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,12 +30,13 @@
         <activity
             android:name=".InfoActivity"
             android:label="@string/title_activity_info"
-            android:parentActivityName=".MainMenu" />
+            android:parentActivityName=".MainMenu" >
+        </activity>
         <activity
             android:name=".PlanetActivity"
             android:label="@string/title_activity_planet"
             android:parentActivityName=".MainMenu"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem.MainMenu" />
@@ -43,20 +44,21 @@
         <activity
             android:name=".CameraActivity"
             android:label="@string/title_activity_camera"
-            android:parentActivityName=".CameraInstructionActivity" />
+            android:parentActivityName=".CameraInstructionActivity" >
+        </activity>
         <activity
             android:name=".CameraInstructionActivity"
-            android:parentActivityName=".MainMenu" />
+            android:parentActivityName=".MainMenu" >
+        </activity>
         <activity
             android:name=".CameraSubmitActivity"
             android:label="@string/title_activity_camera_submit"
-            android:parentActivityName=".CameraActivity" />
+            android:parentActivityName=".CameraActivity" >
+        </activity>
         <activity
-            android:name=".GamePickerActivity"
-            android:label="@string/title_activity_game_dev" />
-        <activity android:name=".GameSurfaceView" />
-        <activity android:name=".PaintingActivity" />
-        <activity android:name=".CatchPaintingActivity" />
+            android:name=".AdultModeActivity"
+            android:label="@string/title_activity_statue_of_liberty" >
+        </activity>
     </application>
 
 </manifest>
