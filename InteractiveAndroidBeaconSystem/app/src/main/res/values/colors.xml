@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="main_menu_background">#a255e1</color>
+    <color name="regionc_color">#33cc33</color>
     <color name="planet_activity_number_color">#ffffff</color>
 </resources>
