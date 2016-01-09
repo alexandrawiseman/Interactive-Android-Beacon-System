@@ -201,36 +201,6 @@
                             android:textColor="#000000"/>
                     </TableRow>
 
-                    <TableRow>
-
-                        <TextView
-                            android:layout_column="1"
-                            android:padding="3dip"
-                            android:text="@string/bullet"
-                            android:textColor="#000000"/>
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:padding="3dip"
-                            android:text="@string/credit_statue_blackwhite"
-                            android:textColor="#000000"/>
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_column="1"
-                            android:padding="3dip"
-                            android:text="@string/bullet"
-                            android:textColor="#000000"/>
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:padding="3dip"
-                            android:text="@string/credit_planets"
-                            android:textColor="#000000"/>
-                    </TableRow>
-
                 </TableLayout>
 
             </LinearLayout>
