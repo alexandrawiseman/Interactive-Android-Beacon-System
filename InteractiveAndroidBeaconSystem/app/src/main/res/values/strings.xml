@@ -41,7 +41,19 @@
     <string name="score">Score: 0</string>
     <string name="title_activity_monitoring">MonitoringActivity</string>
     <string name="title_activity_enter_name">EnterNameActivity</string>
-
     <string name="entername_intro">Welcome to the Museum. This is a Scavenger Hunt Game. To begin, please enter your name.</string>
+    <string name="title_activity_statue_of_liberty">StatueOfLibertyActivity</string>
+    <string name="credit_statue_blackwhite">"New york vector skyline" made by Freepik</string>
+    <string name="credit_planets">"Sun vector" made by Freepik</string>
+    <string name="adult_statue_1">The Statue of Liberty is 305 feet, 6 inches and weighs 450,000 pounds.</string>
+    <string name="adult_statue_2">The Statue of Liberty was a gift from France, given to America in 1886.</string>
+    <string name="adult_statue_3">Lady Liberty wears a size 879 shoe.</string>
+    <string name="adult_planets_1">The coldest planet is Neptune.</string>
+    <string name="adult_planets_2">Mercury takes 88 days to circle the sun.</string>
+    <string name="adult_planets_3">Venus is the brightest planet.</string>
+    <string name="adult_planets_4">Mars is the home of the largest volcano in the solar system.</string>
+    <string name="adult_planets_5">One Neptune year lasts 165 Earth years.</string>
+    <string name="facts">FACTS:</string>
+    <string name="done">DONE</string>
 
 </resources>

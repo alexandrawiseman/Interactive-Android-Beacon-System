@@ -44,6 +44,16 @@ public class MainMenu extends Activity
             }
         });
 
+        mAdultButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent adultIntent = new Intent(MainMenu.this, AdultModeActivity.class);
+                startActivity(adultIntent);
+            }
+        });
+
         mChildButton = (ImageButton) findViewById(R.id.childButton);
         mChildButton.setOnTouchListener(new View.OnTouchListener()
         {
