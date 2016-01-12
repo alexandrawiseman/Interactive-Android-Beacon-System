@@ -7,6 +7,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
+import org.altbeacon.beacon.BeaconManager;
+
 public class MainMenu extends Activity
 {
 
@@ -19,6 +21,7 @@ public class MainMenu extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        BeaconManager beaconManager = org.altbeacon.beacon.BeaconManager.getInstanceForApplication(this);
         setContentView(R.layout.activity_main_menu);
 
         mAdultButton = (ImageButton) findViewById(R.id.adultButton);
@@ -38,16 +41,6 @@ public class MainMenu extends Activity
                 }
 
                 return false;
-            }
-        });
-
-        mAdultButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent adultIntent = new Intent(MainMenu.this, AdultModeActivity.class);
-                startActivity(adultIntent);
             }
         });
 
@@ -76,11 +69,24 @@ public class MainMenu extends Activity
             @Override
             public void onClick(View v)
             {
+                Intent enternameIntent = new Intent(MainMenu.this, EnterNameActivity.class);
+                startActivity(enternameIntent);
+
+                //Bluetooth operated menu selects game to play
+                //Intent pickerIntent = new Intent(MainMenu.this, GamePickerActivity.class);
+                //startActivity(pickerIntent);
+
+                //game A
                 //Intent planetIntent = new Intent(MainMenu.this, PlanetActivity.class);
                 //startActivity(planetIntent);
 
-                Intent cameraIntent = new Intent(MainMenu.this, CameraInstructionActivity.class);
-                startActivity(cameraIntent);
+                //game B
+                //Intent cameraIntent = new Intent(MainMenu.this, CameraInstructionActivity.class);
+                //startActivity(cameraIntent);
+
+                //game C
+                //Intent paintingIntent = new Intent(MainMenu.this, CatchPaintingActivity.class);
+                //startActivity(paintingIntent);
             }
         });
 

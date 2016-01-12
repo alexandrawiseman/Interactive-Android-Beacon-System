@@ -38,7 +38,7 @@ public class CameraSubmitActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                Intent submitIntent = new Intent(CameraSubmitActivity.this, MainMenu.class);
+                Intent submitIntent = new Intent(CameraSubmitActivity.this, GamePickerActivity.class);
                 submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(submitIntent);
             }

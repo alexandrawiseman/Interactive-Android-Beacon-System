@@ -1,7 +1,6 @@
 package com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -190,9 +189,10 @@ public class PlanetActivity extends Activity
                 System.out.println(v.getBackground());
                 int score = getGrade();
                 System.out.println("GRADE = " + score + "/8");
-                Intent mainMenuIntent = new Intent(PlanetActivity.this, MainMenu.class);
-                mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(mainMenuIntent);
+                //Intent mainMenuIntent = new Intent(PlanetActivity.this, MainMenu.class);
+                //mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //startActivity(mainMenuIntent);
+                finish();
             }
         });
 
