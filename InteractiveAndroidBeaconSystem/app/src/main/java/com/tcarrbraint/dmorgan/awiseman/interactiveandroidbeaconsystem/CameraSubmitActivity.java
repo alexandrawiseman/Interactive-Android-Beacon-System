@@ -15,6 +15,7 @@ public class CameraSubmitActivity extends Activity
     private ImageView mUserImage;
     private Button mSubmitButton;
     private Button mRedoButton;
+    private boolean[] complete = new boolean[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -22,6 +23,11 @@ public class CameraSubmitActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_submit);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        if(getIntent().getBooleanArrayExtra("GamesComplete") != null)
+        {
+            complete = getIntent().getBooleanArrayExtra("GamesComplete");
+        }
 
         mUserImage = (ImageView) findViewById(R.id.userImage);
         mSubmitButton = (Button) findViewById(R.id.submit_picture);
@@ -40,6 +46,8 @@ public class CameraSubmitActivity extends Activity
             {
                 Intent submitIntent = new Intent(CameraSubmitActivity.this, GamePickerActivity.class);
                 submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                complete[1] = true;
+                submitIntent.putExtra("GamesComplete", complete);
                 startActivity(submitIntent);
             }
         });

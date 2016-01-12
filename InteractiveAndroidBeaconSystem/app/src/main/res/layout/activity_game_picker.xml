@@ -8,75 +8,61 @@
     android:paddingLeft="30dp"
     android:paddingRight="30dp"
     android:paddingTop="0dp"
-    android:id="@+id/backlayout">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingBottom="0dp"
-        android:paddingTop="35dp">
+    android:id="@+id/backlayout"
+    android:baselineAligned="false">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/child_intro"
-            android:textColor="#ffffff"
-            android:textSize="22sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingBottom="0dp"
-        android:paddingTop="35dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="beacon status"
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:id="@+id/regiontext" />
+            android:paddingBottom="0dp"
+            android:paddingTop="35dp"/>
 
-    </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="beacon status"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:id="@+id/regiontext"
+            android:paddingBottom="20dp"
+            android:paddingTop="35dp"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingBottom="0dp"
-        android:paddingTop="35dp">
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center">
 
         <Button
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
             android:text="New Button"
-            android:id="@+id/playgame" />
+            android:id="@+id/playgame"
+            android:layout_gravity="center"/>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:orientation="horizontal"
         android:paddingBottom="15dp"
-        android:paddingTop="50dp">
+        android:paddingTop="50dp"
+        >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingRight="5dp"
-            android:paddingLeft="0dp">
+            android:paddingLeft="0dp"
+            >
 
             <ImageButton
                 android:id="@+id/aButton"
@@ -90,10 +76,11 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:paddingTop="10dp"
                 android:text="@string/a_button"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:textStyle="bold"/>
 
         </LinearLayout>
@@ -118,10 +105,11 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:paddingTop="10dp"
                 android:text="@string/b_button"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 android:id="@+id/tableforbutton" />
 
@@ -146,10 +134,11 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:paddingTop="10dp"
                 android:text="@string/c_button"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:textStyle="bold"/>
 
         </LinearLayout>

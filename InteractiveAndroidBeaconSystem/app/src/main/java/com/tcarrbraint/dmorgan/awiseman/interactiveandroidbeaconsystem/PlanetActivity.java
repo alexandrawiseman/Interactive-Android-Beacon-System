@@ -1,6 +1,7 @@
 package com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,12 +18,18 @@ public class PlanetActivity extends Activity
     private int planetNumber;
     private List<Integer> planetList;
     private HashMap hm;
+    private boolean[] complete = new boolean[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planet);
+
+        if(getIntent().getBooleanArrayExtra("GamesComplete") != null)
+        {
+            complete = getIntent().getBooleanArrayExtra("GamesComplete");
+        }
 
         mButtons[0] = (Button) findViewById(R.id.b1);
         mButtons[1] = (Button) findViewById(R.id.b2);
@@ -192,7 +199,11 @@ public class PlanetActivity extends Activity
                 //Intent mainMenuIntent = new Intent(PlanetActivity.this, MainMenu.class);
                 //mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 //startActivity(mainMenuIntent);
-                finish();
+                Intent submitIntent = new Intent(PlanetActivity.this, GamePickerActivity.class);
+                submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                complete[0] = true;
+                submitIntent.putExtra("GamesComplete", complete);
+                startActivity(submitIntent);
             }
         });
 

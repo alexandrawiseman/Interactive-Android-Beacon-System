@@ -37,9 +37,7 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
     private Button playbutton;
     private String savelast = "E";
     private String saveIdentity = "D";
-    private int acomplete;
-    private int bcomplete;
-    private int ccomplete;
+    private boolean[] complete = new boolean[3];
 
 
     long startTime = 0;
@@ -52,14 +50,14 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
                 switch (saveIdentity) {
                     case "A": {
                         logToDisplay("You made it to the Galaxy Exhibit! In this game you need to order the planets in our solar system. Ready?");
-                        layoutbackground.setBackgroundColor(Color.RED);
+                        layoutbackground.setBackgroundColor(Color.BLUE);
                         playbutton.setVisibility(View.VISIBLE);
                         playbutton.setText("Play Planet Game");
                         break;
                     }
                     case "B": {
                         logToDisplay("The World Wonders Exhibit. It's time to take a picture of yourself with the statue of liberty. Ready?");
-                        layoutbackground.setBackgroundColor(Color.BLUE);
+                        layoutbackground.setBackgroundColor(Color.RED);
                         playbutton.setVisibility(View.VISIBLE);
                         playbutton.setText("Play Liberty Statue Game");
                         break;
@@ -95,27 +93,20 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_picker);
-
-        if (savedInstanceState != null) {
-            // Restore value of members from saved state
-            acomplete = savedInstanceState.getInt("A");
-            bcomplete = savedInstanceState.getInt("B");
-            ccomplete = savedInstanceState.getInt("C");
-        } else {
-            acomplete = 0;
-            bcomplete = 0;
-            ccomplete = 0;
+        if(getIntent().getBooleanArrayExtra("GamesComplete") != null)
+        {
+            complete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
 
-        if (acomplete != 0) {
+        if (complete[0]) {
             ImageButton buttona = (ImageButton) GamePickerActivity.this.findViewById(R.id.aButton);
             buttona.setImageResource(R.drawable.a_icon);
         }
-        if (bcomplete != 0) {
+        if (complete[1]) {
             ImageButton buttonb = (ImageButton) GamePickerActivity.this.findViewById(R.id.bButton);
             buttonb.setImageResource(R.drawable.b_icon);
         }
-        if (ccomplete != 0) {
+        if (complete[2]) {
             ImageButton buttonc = (ImageButton) GamePickerActivity.this.findViewById(R.id.cButton);
             buttonc.setImageResource(R.drawable.c_icon);
         }
@@ -123,9 +114,9 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
         layoutbackground = (LinearLayout) GamePickerActivity.this.findViewById(R.id.backlayout);
         playbutton = (Button) GamePickerActivity.this.findViewById(R.id.playgame);
 
-        Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10163"), Identifier.parse("1"), Identifier.parse("1"));
+        Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC1CA64"), Identifier.parse("1"), Identifier.parse("1"));
         Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10001"), Identifier.parse("1"), Identifier.parse("2"));
-        Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10003"), Identifier.parse("1"), Identifier.parse("2"));
+        Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10002"), Identifier.parse("1"), Identifier.parse("2"));
         try {
             beaconManager.startMonitoringBeaconsInRegion(region1);
         } catch (RemoteException e) {
@@ -171,23 +162,22 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
             public void onClick(View v) {
                 switch (saveIdentity) {
                     case "A": {
-                        acomplete = 1;
                         //ImageButton buttona = (ImageButton) GamePickerActivity.this.findViewById(R.id.aButton);
                         //buttona.setImageResource(R.drawable.a_icon);
                         Intent planetIntent = new Intent(GamePickerActivity.this, PlanetActivity.class);
+                        planetIntent.putExtra("GamesComplete", complete);
                         startActivity(planetIntent);
                         break;
                     }
                     case "B": {
-                        bcomplete = 1;
                         //ImageButton buttonb = (ImageButton) GamePickerActivity.this.findViewById(R.id.bButton);
                         //buttonb.setImageResource(R.drawable.b_icon);
                         Intent cameraIntent = new Intent(GamePickerActivity.this, CameraInstructionActivity.class);
+                        cameraIntent.putExtra("GamesComplete", complete);
                         startActivity(cameraIntent);
                         break;
                     }
                     case "C": {
-                        ccomplete = 1;
                         //ImageButton buttonc = (ImageButton) GamePickerActivity.this.findViewById(R.id.cButton);
                         //buttonc.setImageResource(R.drawable.c_icon);
                         Intent paintingIntent = new Intent(GamePickerActivity.this, CatchPaintingActivity.class);
@@ -205,10 +195,8 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
         // Save the user's current game state
-        savedInstanceState.putInt("A", acomplete);
-        savedInstanceState.putInt("B", bcomplete);
-        savedInstanceState.putInt("C", ccomplete);
 
     }
 
@@ -216,9 +204,6 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        acomplete = savedInstanceState.getInt("A");
-        bcomplete = savedInstanceState.getInt("B");
-        ccomplete = savedInstanceState.getInt("C");
     }
 
 
@@ -327,7 +312,7 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
     private String identify(String uid) {
 
         switch (uid) {
-            case "a7ae2eb7-1f00-4168-b99b-a749bac10163":
+            case "a7ae2eb7-1f00-4168-b99b-a749bac1ca64":
                 return "A";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10001":
@@ -338,7 +323,6 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
 
             default:
                 return "NotABC";
-
 
         }
 
