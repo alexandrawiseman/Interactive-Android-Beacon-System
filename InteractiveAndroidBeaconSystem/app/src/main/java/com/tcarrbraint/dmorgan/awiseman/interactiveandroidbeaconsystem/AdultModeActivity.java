@@ -19,6 +19,8 @@ public class AdultModeActivity extends Activity
     private String beacon;
     private int[] mStatueStrings = {R.string.adult_statue_1, R.string.adult_statue_2, R.string.adult_statue_3};
     private int[] mPlanetStrings = {R.string.adult_planets_1, R.string.adult_planets_2, R.string.adult_planets_3, R.string.adult_planets_4, R.string.adult_planets_5};
+    private boolean[] complete = new boolean[3];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -26,14 +28,23 @@ public class AdultModeActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adult_mode);
 
-        beacon = "statue";
+        if(getIntent().getBooleanArrayExtra("GamesComplete") != null)
+        {
+            complete = getIntent().getBooleanArrayExtra("GamesComplete");
+        }
+        if(getIntent().getBooleanArrayExtra("beacon") != null)
+        {
+            beacon = getIntent().getStringExtra("beacon");
+        }
+
+        beacon = "B";
 
         mAdultImage = (ImageView) findViewById(R.id.adult_image);
-        if(beacon == "statue")
+        if(beacon == "B")
         {
             mAdultImage.setImageResource(R.drawable.statueofliberty_blackandwhite);
         }
-        else if(beacon == "planets")
+        else if(beacon == "C")
         {
             mAdultImage.setImageResource(R.drawable.planets);
         }
@@ -44,17 +55,33 @@ public class AdultModeActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                Intent doneIntent = new Intent(AdultModeActivity.this, MainMenu.class);
+                Intent doneIntent = new Intent(AdultModeActivity.this, FactPickerActivity.class);
+                doneIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                switch (beacon) {
+                    case "A": {
+                        complete[0] = true;
+                        break;
+                    }
+                    case "B": {
+                        complete[1] = true;
+                        break;
+                    }
+                    case "C": {
+                        complete[2] = true;
+                        break;
+                    }
+                }
+                doneIntent.putExtra("GamesComplete", complete);
                 startActivity(doneIntent);
             }
         });
 
         mFact = (TextView) findViewById(R.id.fact_text);
-        if(beacon == "statue")
+        if(beacon == "B")
         {
             mFact.setText(getResources().getString(R.string.adult_statue_1));
         }
-        else if(beacon == "planets")
+        else if(beacon == "C")
         {
             mFact.setText(getResources().getString(R.string.adult_planets_1));
         }
@@ -67,7 +94,7 @@ public class AdultModeActivity extends Activity
             {
                 mFactCount++;
 
-                if(beacon == "statue")
+                if(beacon == "B")
                 {
                     if (mFactCount >= mStatueStrings.length)
                     {
@@ -75,7 +102,7 @@ public class AdultModeActivity extends Activity
                     }
                     mFact.setText(mStatueStrings[mFactCount]);
                 }
-                else if(beacon == "planets")
+                else if(beacon == "C")
                 {
                     if (mFactCount >= mPlanetStrings.length)
                     {

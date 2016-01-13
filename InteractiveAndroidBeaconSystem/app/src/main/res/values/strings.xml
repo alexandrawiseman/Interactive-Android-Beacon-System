@@ -55,5 +55,6 @@
     <string name="adult_planets_5">One Neptune year lasts 165 Earth years.</string>
     <string name="facts">FACTS:</string>
     <string name="done">DONE</string>
+    <string name="title_activity_fact_picker">FactPickerActivity</string>
 
 </resources>
