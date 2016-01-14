@@ -3,7 +3,6 @@ package com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,7 +30,7 @@ import java.text.DecimalFormat;
 import java.util.Collection;
 
 
-public class GamePickerActivity extends Activity implements BeaconConsumer {
+public class FactPickerActivity extends Activity implements BeaconConsumer {
 
     private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
     private LinearLayout layoutbackground;
@@ -50,54 +49,24 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
             if (savelast != saveIdentity) {
                 switch (saveIdentity) {
                     case "A": {
-
-
+                        logToDisplay("You've reached the Galaxy exhibit. Click the button to learn more about your solar system.");
                         layoutbackground.setBackgroundColor(Color.BLUE);
                         playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText("Play Planet Game");
-
-                        if (complete[0]){
-                            logToDisplay("You are smart! Good work ordering the planets, now find the next exhibit.");
-                            playbutton.setClickable(false);
-                            playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
-                        } else {
-                            logToDisplay("You made it to the Galaxy Exhibit! In this game you need to order the planets in our solar system. Ready?");
-                            playbutton.setClickable(true);
-                            playbutton.getBackground().setColorFilter(null);
-                        }
+                        playbutton.setText("Enter Planet Exhibit");
                         break;
-
-
                     }
                     case "B": {
+                        logToDisplay("The World Wonders Exhibit. Click to learn about France's largest gift.");
                         layoutbackground.setBackgroundColor(Color.RED);
                         playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText("Play Liberty Statue Game");
-                        if (complete[1]){
-                            logToDisplay("Nice Selfie! Now get to your next exhibit!");
-                            playbutton.setClickable(false);
-                            playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
-                        } else {
-                            logToDisplay("The World Wonders Exhibit. It's time to take a picture of yourself with the statue of liberty. Ready?");
-                            playbutton.setClickable(true);
-                            playbutton.getBackground().setColorFilter(null);
-                        }
+                        playbutton.setText("Enter Liberty Exhibit");
                         break;
                     }
                     case "C": {
-
+                        logToDisplay("The paintings exhibit. Click for info on the most famous artists including Leonardo, Van Gogh, and Picasso.");
                         layoutbackground.setBackgroundResource(R.color.regionc_color);
                         playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText("Play Catch Game");
-                        if (complete[2]){
-                            logToDisplay("Great work. You collected a lot of paintings! Move to the next exhibit!");
-                            playbutton.setClickable(false);
-                            playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
-                        } else {
-                            logToDisplay("Wow look at the famous paintings! In this game tilt the phone to catch as many paintings as you can in the time limit. Ready?");
-                            playbutton.setClickable(true);
-                            playbutton.getBackground().setColorFilter(null);
-                        }
+                        playbutton.setText("Enter Famous Paintings Exhibit");
                         break;
                     }
                     default: {
@@ -130,20 +99,20 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
         }
 
         if (complete[0]) {
-            ImageButton buttona = (ImageButton) GamePickerActivity.this.findViewById(R.id.aButton);
+            ImageButton buttona = (ImageButton) FactPickerActivity.this.findViewById(R.id.aButton);
             buttona.setImageResource(R.drawable.a_icon);
         }
         if (complete[1]) {
-            ImageButton buttonb = (ImageButton) GamePickerActivity.this.findViewById(R.id.bButton);
+            ImageButton buttonb = (ImageButton) FactPickerActivity.this.findViewById(R.id.bButton);
             buttonb.setImageResource(R.drawable.b_icon);
         }
         if (complete[2]) {
-            ImageButton buttonc = (ImageButton) GamePickerActivity.this.findViewById(R.id.cButton);
+            ImageButton buttonc = (ImageButton) FactPickerActivity.this.findViewById(R.id.cButton);
             buttonc.setImageResource(R.drawable.c_icon);
         }
 
-        layoutbackground = (LinearLayout) GamePickerActivity.this.findViewById(R.id.backlayout);
-        playbutton = (Button) GamePickerActivity.this.findViewById(R.id.playgame);
+        layoutbackground = (LinearLayout) FactPickerActivity.this.findViewById(R.id.backlayout);
+        playbutton = (Button) FactPickerActivity.this.findViewById(R.id.playgame);
 
         Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC1CA64"), Identifier.parse("1"), Identifier.parse("1"));
         Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10001"), Identifier.parse("1"), Identifier.parse("2"));
@@ -193,27 +162,25 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
             public void onClick(View v) {
                 switch (saveIdentity) {
                     case "A": {
-                        //ImageButton buttona = (ImageButton) GamePickerActivity.this.findViewById(R.id.aButton);
-                        //buttona.setImageResource(R.drawable.a_icon);
-                        Intent planetIntent = new Intent(GamePickerActivity.this, PlanetActivity.class);
+                        Intent planetIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
                         planetIntent.putExtra("GamesComplete", complete);
+                        planetIntent.putExtra("beacon", saveIdentity);
                         startActivity(planetIntent);
                         break;
                     }
                     case "B": {
-                        //ImageButton buttonb = (ImageButton) GamePickerActivity.this.findViewById(R.id.bButton);
-                        //buttonb.setImageResource(R.drawable.b_icon);
-                        Intent cameraIntent = new Intent(GamePickerActivity.this, CameraInstructionActivity.class);
+                        Intent cameraIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
                         cameraIntent.putExtra("GamesComplete", complete);
+                        cameraIntent.putExtra("beacon", saveIdentity);
                         startActivity(cameraIntent);
                         break;
                     }
                     case "C": {
-                        //ImageButton buttonc = (ImageButton) GamePickerActivity.this.findViewById(R.id.cButton);
-                        //buttonc.setImageResource(R.drawable.c_icon);
-                        Intent paintingIntent = new Intent(GamePickerActivity.this, CatchPaintingActivity.class);
+                        Intent paintingIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
                         paintingIntent.putExtra("GamesComplete", complete);
+                        paintingIntent.putExtra("beacon", saveIdentity);
                         startActivity(paintingIntent);
+
                         break;
                     }
 
@@ -335,7 +302,7 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
     private void logToDisplay(final String line) {
         runOnUiThread(new Runnable() {
             public void run() {
-                TextView regiontext = (TextView) GamePickerActivity.this.findViewById(R.id.regiontext);
+                TextView regiontext = (TextView) FactPickerActivity.this.findViewById(R.id.regiontext);
                 regiontext.setText(line);
             }
         });

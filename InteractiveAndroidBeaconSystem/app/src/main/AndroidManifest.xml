@@ -46,8 +46,7 @@
             android:parentActivityName=".CameraInstructionActivity" />
         <activity
             android:name=".AdultModeActivity"
-            android:label="@string/title_activity_statue_of_liberty" >
-        </activity>
+            android:label="@string/title_activity_statue_of_liberty"></activity>
         <activity
             android:name=".CameraInstructionActivity"
             android:parentActivityName=".MainMenu" />
@@ -62,12 +61,18 @@
         <activity android:name=".CatchPaintingActivity" />
         <activity
             android:name=".EnterNameActivity"
-            android:label="@string/title_activity_enter_name"></activity>
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+            android:label="@string/title_activity_enter_name" />
+        <!--
+             ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".FactPickerActivity"
+            android:label="@string/title_activity_fact_picker"></activity>
     </application>
 
 </manifest>

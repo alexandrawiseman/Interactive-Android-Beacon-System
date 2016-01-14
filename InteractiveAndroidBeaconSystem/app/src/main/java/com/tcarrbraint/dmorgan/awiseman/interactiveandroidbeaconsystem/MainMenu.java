@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 
 import org.altbeacon.beacon.BeaconManager;
 
+
 public class MainMenu extends Activity
 {
 
@@ -49,7 +50,7 @@ public class MainMenu extends Activity
             @Override
             public void onClick(View v)
             {
-                Intent adultIntent = new Intent(MainMenu.this, AdultModeActivity.class);
+                Intent adultIntent = new Intent(MainMenu.this, FactPickerActivity.class);
                 startActivity(adultIntent);
             }
         });

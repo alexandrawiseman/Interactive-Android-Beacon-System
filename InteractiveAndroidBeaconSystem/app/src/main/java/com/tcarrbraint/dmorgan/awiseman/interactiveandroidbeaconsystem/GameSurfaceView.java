@@ -15,6 +15,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -50,6 +52,8 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
     public static int y1;
     public static int z1;
     public int score = 0;
+    private SoundPool sounds;
+    private int sCatch;
     private static final int width = 150;
     private static final int height = 150;
 
@@ -81,6 +85,10 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
             }
         });
 
+
+        //declare variables
+        sounds = new SoundPool(10, AudioManager.STREAM_MUSIC,0);
+        sCatch = sounds.load(context, R.raw.catchpainting, 1);
 
 
         sprites = new Sprite[] {
@@ -202,30 +210,20 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
     }
 
 
-    int counter = 2000;
+    int counter = 1000;
     protected void step() {
 
         //manage time and add paintings
         counter--;
-        if ((counter == 1000) || (counter == 500)){
+        if ((counter == 700) || (counter == 400)){
             paintings = addElement(paintings, new Painting(300, 300, paintingpicker()));
         }
         if (counter <= 0 ) {
-            //END GAME?
-
-
+            //END GAME
             synchronized (holder) {
                 //quit to mainmenu
                 ((Activity) mContext).finish();
             }
-
-            //Intent intent = new Intent("kill");
-            //LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-            //holder.getSurface().release();
-
-            //Intent mainMenuIntent = new Intent(GameSurfaceView, MainMenu.class);
-            //mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            //startActivity(mainMenuIntent);
         }
 
         //Move the Paintings
@@ -289,9 +287,14 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
 
                 //Collision player to painting
                 if (Rect.intersects(current, other)) {
+
+                    //score
                     Log.d(TAG, "Collision!");
                     score += 100;
                     Log.d(TAG, String.valueOf(score));
+
+                    //play sound
+                    sounds.play(sCatch,1.0f,1.0f,0,0,1.5f);
 
                     //move painting to new location
                     Random randme = new Random();
@@ -395,13 +398,12 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
         textPaint.setAntiAlias(true);
         textPaint.setARGB(255, 0, 0, 0);
         textPaint.setFakeBoldText(true);
-        textPaint.setTextSize(30);
+        textPaint.setTextSize(50);
 
         DecimalFormat twoDForm = new DecimalFormat("#.##");
         double counterdisplay = Double.parseDouble(twoDForm.format(counter / 100.0));
         canvas.drawText("Time: " + counterdisplay,20,100,textPaint);
-        canvas.drawText("Score: " + score,500,100,textPaint);
-
+        canvas.drawText("Score: " + score,400,100,textPaint);
     }
 
     @Override
