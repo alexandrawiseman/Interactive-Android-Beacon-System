@@ -49,28 +49,28 @@ public class FactPickerActivity extends Activity implements BeaconConsumer {
             if (savelast != saveIdentity) {
                 switch (saveIdentity) {
                     case "A": {
-                        logToDisplay("You've reached the Galaxy exhibit. Click the button to learn more about your solar system.");
+                        logToDisplay(getResources().getString(R.string.factpicker_galaxy));
                         layoutbackground.setBackgroundColor(Color.BLUE);
                         playbutton.setVisibility(View.VISIBLE);
                         playbutton.setText("Enter Planet Exhibit");
                         break;
                     }
                     case "B": {
-                        logToDisplay("The World Wonders Exhibit. Click to learn about France's largest gift.");
+                        logToDisplay(getResources().getString(R.string.factpicker_statue));
                         layoutbackground.setBackgroundColor(Color.RED);
                         playbutton.setVisibility(View.VISIBLE);
                         playbutton.setText("Enter Liberty Exhibit");
                         break;
                     }
                     case "C": {
-                        logToDisplay("The paintings exhibit. Click for info on the most famous artists including Leonardo, Van Gogh, and Picasso.");
+                        logToDisplay(getResources().getString(R.string.factpicker_monalisa));
                         layoutbackground.setBackgroundResource(R.color.regionc_color);
                         playbutton.setVisibility(View.VISIBLE);
                         playbutton.setText("Enter Famous Paintings Exhibit");
                         break;
                     }
                     default: {
-                        logToDisplay("We'll let you know when you're at an exhibit.");
+                        logToDisplay(getResources().getString(R.string.factpicker_default));
                         layoutbackground.setBackgroundResource(R.color.main_menu_background);
                         playbutton.setVisibility(View.GONE);
                         break;

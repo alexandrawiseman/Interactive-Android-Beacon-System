@@ -19,6 +19,7 @@ public class AdultModeActivity extends Activity
     private String beacon;
     private int[] mStatueStrings = {R.string.adult_statue_1, R.string.adult_statue_2, R.string.adult_statue_3};
     private int[] mPlanetStrings = {R.string.adult_planets_1, R.string.adult_planets_2, R.string.adult_planets_3, R.string.adult_planets_4, R.string.adult_planets_5};
+    private int[] mPaintingStrings = {R.string.adult_painting_1, R.string.adult_painting_2, R.string.adult_painting_3};
     private boolean[] complete = new boolean[3];
 
 
@@ -37,10 +38,14 @@ public class AdultModeActivity extends Activity
             beacon = getIntent().getStringExtra("beacon");
         }
 
-        beacon = "B";
+        beacon = "A";
 
         mAdultImage = (ImageView) findViewById(R.id.adult_image);
-        if(beacon == "B")
+        if(beacon == "A")
+        {
+            mAdultImage.setImageResource(R.drawable.monalisa);
+        }
+        else if(beacon == "B")
         {
             mAdultImage.setImageResource(R.drawable.statueofliberty_blackandwhite);
         }
@@ -77,7 +82,11 @@ public class AdultModeActivity extends Activity
         });
 
         mFact = (TextView) findViewById(R.id.fact_text);
-        if(beacon == "B")
+        if(beacon == "A")
+        {
+            mFact.setText(getResources().getString(R.string.adult_painting_1));
+        }
+        else if(beacon == "B")
         {
             mFact.setText(getResources().getString(R.string.adult_statue_1));
         }
@@ -94,7 +103,15 @@ public class AdultModeActivity extends Activity
             {
                 mFactCount++;
 
-                if(beacon == "B")
+                if(beacon == "A")
+                {
+                    if (mFactCount >= mPaintingStrings.length)
+                    {
+                        mFactCount = 0;
+                    }
+                    mFact.setText(mPaintingStrings[mFactCount]);
+                }
+                else if(beacon == "B")
                 {
                     if (mFactCount >= mStatueStrings.length)
                     {
