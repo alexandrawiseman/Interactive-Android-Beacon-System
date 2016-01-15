@@ -28,7 +28,7 @@
         android:inputType="textPersonName"
         android:hint="@string/entername_hint"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/name_editText"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"/>
 
