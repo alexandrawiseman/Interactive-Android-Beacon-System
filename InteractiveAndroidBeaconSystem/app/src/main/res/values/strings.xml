@@ -41,7 +41,7 @@
     <string name="score">Score: 0</string>
     <string name="title_activity_monitoring">MonitoringActivity</string>
     <string name="title_activity_enter_name">EnterNameActivity</string>
-    <string name="entername_intro">Welcome to the Museum. This is a Scavenger Hunt Game. To begin, please enter your name.</string>
+    <string name="entername_intro">Welcome to the Museum. To begin, please enter your name.</string>
     <string name="title_activity_statue_of_liberty">StatueOfLibertyActivity</string>
     <string name="credit_statue_blackwhite">"New york vector skyline" made by Freepik</string>
     <string name="credit_planets">"Sun vector" made by Freepik</string>
@@ -56,5 +56,6 @@
     <string name="facts">FACTS:</string>
     <string name="done">DONE</string>
     <string name="title_activity_fact_picker">FactPickerActivity</string>
+    <string name="entername_hint">Name</string>
 
 </resources>
