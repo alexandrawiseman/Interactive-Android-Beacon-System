@@ -53,9 +53,16 @@
     <string name="adult_planets_3">Venus is the brightest planet.</string>
     <string name="adult_planets_4">Mars is the home of the largest volcano in the solar system.</string>
     <string name="adult_planets_5">One Neptune year lasts 165 Earth years.</string>
+    <string name="adult_painting_1">The subject\'s name isn\'t Mona Lisa - it\'s Lisa Gherardini.</string>
+    <string name="adult_painting_2">The painting is 30 by 21 inches and weighs just 18 pounds.</string>
+    <string name="adult_painting_3">The French emperor, Napoleon, once had Mona Lisa hanging in his bedroom.</string>
     <string name="facts">FACTS:</string>
     <string name="done">DONE</string>
     <string name="title_activity_fact_picker">FactPickerActivity</string>
     <string name="entername_hint">Name</string>
+    <string name="factpicker_galaxy">You\'ve reached the Galaxy exhibit. Click the button to learn more about your solar system.</string>
+    <string name="factpicker_statue">The World Wonders Exhibit. Click to learn about France\'s largest gift.</string>
+    <string name="factpicker_monalisa">The paintings exhibit. Click for info on the famous painting: Mona Lisa.</string>
+    <string name="factpicker_default">We\'ll let you know when you\'re at an exhibit.</string>
 
 </resources>
