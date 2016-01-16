@@ -22,8 +22,8 @@ public class Config {
     public static final String TAG_JSON_ARRAY="result";
     public static final String TAG_ID = "id";
     public static final String TAG_NAME = "name";
-    public static final String TAG_DESG = "loc";
-    public static final String TAG_SAL = "score";
+    public static final String TAG_LOC = "loc";
+    public static final String TAG_SCORE = "score";
 
     //employee id to pass with intent
     public static final String EMP_ID = "emp_id";

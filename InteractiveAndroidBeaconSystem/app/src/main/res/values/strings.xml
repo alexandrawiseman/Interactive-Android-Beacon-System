@@ -11,6 +11,7 @@
     <string name="content_description_teacher">Teacher Icon</string>
     <string name="content_description_info">Info Icon</string>
     <string name="title_activity_info">INFO</string>
+    <string name="title_teacher">TEACHER MODE</string>
     <string name="developers_title">Developers</string>
     <string name="developers_paragraph">Alexandra Wiseman\nDaniel Morgan\nTyler Carr-Braint</string>
     <string name="credits_title">Credits</string>
@@ -64,5 +65,9 @@
     <string name="factpicker_statue">The World Wonders Exhibit. Click to learn about France\'s largest gift.</string>
     <string name="factpicker_monalisa">The paintings exhibit. Click for info on the famous painting: Mona Lisa.</string>
     <string name="factpicker_default">We\'ll let you know when you\'re at an exhibit.</string>
+    <string name="title_activity_teacher">TeacherActivity</string>
+    <string name="teacher_header_name">Name</string>
+    <string name="teacher_header_location">Location</string>
+    <string name="teacher_header_score">Score</string>
 
 </resources>

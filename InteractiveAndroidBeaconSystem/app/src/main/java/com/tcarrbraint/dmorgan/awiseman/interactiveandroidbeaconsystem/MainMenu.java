@@ -121,6 +121,16 @@ public class MainMenu extends Activity
             }
         });
 
+        mTeacherButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent teacherIntent = new Intent(MainMenu.this, TeacherActivity.class);
+                startActivity(teacherIntent);
+            }
+        });
+
         mInfoButton = (ImageButton) findViewById(R.id.infoButton);
         mInfoButton.setOnTouchListener(new View.OnTouchListener()
         {
