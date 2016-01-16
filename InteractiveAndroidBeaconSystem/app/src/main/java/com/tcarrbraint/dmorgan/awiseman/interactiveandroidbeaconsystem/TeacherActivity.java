@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -16,12 +17,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TeacherActivity extends Activity
+public class TeacherActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener
 {
 
     private String JSON_STRING = "";
     private ListView mStudentListView;
     private Button mTeacherBackButton;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,6 +44,22 @@ public class TeacherActivity extends Activity
         });
 
         mStudentListView = (ListView) findViewById(R.id.students_listview);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(TeacherActivity.this);
+
+        mSwipeRefreshLayout.post(new Runnable()
+                                 {
+                                     @Override
+                                     public void run()
+                                     {
+                                         getJSON();
+                                     }
+                                 }
+        );
+    }
+
+    @Override
+    public void onRefresh() {
         getJSON();
     }
 
@@ -76,6 +94,7 @@ public class TeacherActivity extends Activity
     }
 
     private void getJSON(){
+        mSwipeRefreshLayout.setRefreshing(true);
         class GetJSON extends AsyncTask<Void,Void,String>
         {
 
@@ -83,13 +102,11 @@ public class TeacherActivity extends Activity
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(TeacherActivity.this,"Fetching Data","Wait...",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
                 JSON_STRING = s;
                 showStudents();
             }
@@ -103,5 +120,7 @@ public class TeacherActivity extends Activity
         }
         GetJSON gj = new GetJSON();
         gj.execute();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
+
 }
