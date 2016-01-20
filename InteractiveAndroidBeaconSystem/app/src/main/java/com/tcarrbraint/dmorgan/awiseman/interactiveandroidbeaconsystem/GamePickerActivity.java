@@ -47,61 +47,63 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
     Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
-            if (savelast != saveIdentity) {
+
+            if (complete[0] && complete[1] && complete[2]){
+                logToDisplay("Wow you beat the game at every exhibit, you're done! Time to return to your teacher.");
+                playbutton.setClickable(true);
+                playbutton.getBackground().setColorFilter(null);
+                layoutbackground.setBackgroundColor(Color.MAGENTA);
+                playbutton.setVisibility(View.VISIBLE);
+                playbutton.setText("Back to Main Menu");
+            } else if (savelast != saveIdentity) {
                 switch (saveIdentity) {
                     case "A": {
-
-
                         layoutbackground.setBackgroundColor(Color.BLUE);
                         playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText("Play Planet Game");
-
+                        playbutton.setText(R.string.planetbuttontext);
                         if (complete[0]){
-                            logToDisplay("You are smart! Good work ordering the planets, now find the next exhibit.");
+                            logToDisplay(getString(R.string.gamepicker_galaxy_complete));
                             playbutton.setClickable(false);
-                            playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                            playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
                         } else {
-                            logToDisplay("You made it to the Galaxy Exhibit! In this game you need to order the planets in our solar system. Ready?");
+                            logToDisplay(getString(R.string.gamepicker_galaxy));
                             playbutton.setClickable(true);
                             playbutton.getBackground().setColorFilter(null);
                         }
                         break;
-
-
                     }
                     case "B": {
                         layoutbackground.setBackgroundColor(Color.RED);
                         playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText("Play Liberty Statue Game");
+                        playbutton.setText(R.string.statuebuttontext);
                         if (complete[1]){
-                            logToDisplay("Nice Selfie! Now get to your next exhibit!");
+                            logToDisplay(getString(R.string.gamepicker_statue_complete));
                             playbutton.setClickable(false);
                             playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
                         } else {
-                            logToDisplay("The World Wonders Exhibit. It's time to take a picture of yourself with the statue of liberty. Ready?");
+                            logToDisplay(getString(R.string.gamepicker_statue));
                             playbutton.setClickable(true);
                             playbutton.getBackground().setColorFilter(null);
                         }
                         break;
                     }
                     case "C": {
-
                         layoutbackground.setBackgroundResource(R.color.regionc_color);
                         playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText("Play Catch Game");
+                        playbutton.setText(R.string.paintingbuttontext);
                         if (complete[2]){
-                            logToDisplay("Great work. You collected a lot of paintings! Move to the next exhibit!");
+                            logToDisplay(getString(R.string.gamepicker_monalisa_complete));
                             playbutton.setClickable(false);
-                            playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                            playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
                         } else {
-                            logToDisplay("Wow look at the famous paintings! In this game tilt the phone to catch as many paintings as you can in the time limit. Ready?");
+                            logToDisplay(getString(R.string.gamepicker_monalisa));
                             playbutton.setClickable(true);
                             playbutton.getBackground().setColorFilter(null);
                         }
                         break;
                     }
                     default: {
-                        logToDisplay("We'll let you know when you're at an exhibit.");
+                        logToDisplay(getString(R.string.gamepicker_default));
                         layoutbackground.setBackgroundResource(R.color.main_menu_background);
                         playbutton.setVisibility(View.GONE);
                         break;
@@ -131,15 +133,15 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
 
         if (complete[0]) {
             ImageButton buttona = (ImageButton) GamePickerActivity.this.findViewById(R.id.aButton);
-            buttona.setImageResource(R.drawable.a_icon);
+            buttona.setImageResource(R.drawable.check_icon);
         }
         if (complete[1]) {
             ImageButton buttonb = (ImageButton) GamePickerActivity.this.findViewById(R.id.bButton);
-            buttonb.setImageResource(R.drawable.b_icon);
+            buttonb.setImageResource(R.drawable.check_icon);
         }
         if (complete[2]) {
             ImageButton buttonc = (ImageButton) GamePickerActivity.this.findViewById(R.id.cButton);
-            buttonc.setImageResource(R.drawable.c_icon);
+            buttonc.setImageResource(R.drawable.check_icon);
         }
 
         layoutbackground = (LinearLayout) GamePickerActivity.this.findViewById(R.id.backlayout);
@@ -191,32 +193,31 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
         playbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (saveIdentity) {
-                    case "A": {
-                        //ImageButton buttona = (ImageButton) GamePickerActivity.this.findViewById(R.id.aButton);
-                        //buttona.setImageResource(R.drawable.a_icon);
-                        Intent planetIntent = new Intent(GamePickerActivity.this, PlanetActivity.class);
-                        planetIntent.putExtra("GamesComplete", complete);
-                        startActivity(planetIntent);
-                        break;
-                    }
-                    case "B": {
-                        //ImageButton buttonb = (ImageButton) GamePickerActivity.this.findViewById(R.id.bButton);
-                        //buttonb.setImageResource(R.drawable.b_icon);
-                        Intent cameraIntent = new Intent(GamePickerActivity.this, CameraInstructionActivity.class);
-                        cameraIntent.putExtra("GamesComplete", complete);
-                        startActivity(cameraIntent);
-                        break;
-                    }
-                    case "C": {
-                        //ImageButton buttonc = (ImageButton) GamePickerActivity.this.findViewById(R.id.cButton);
-                        //buttonc.setImageResource(R.drawable.c_icon);
-                        Intent paintingIntent = new Intent(GamePickerActivity.this, CatchPaintingActivity.class);
-                        paintingIntent.putExtra("GamesComplete", complete);
-                        startActivity(paintingIntent);
-                        break;
-                    }
+                if (complete[0] && complete[1] && complete[2]) {
+                    Intent doneIntent = new Intent(GamePickerActivity.this, MainMenu.class);
+                    startActivity(doneIntent);
+                } else {
+                    switch (saveIdentity) {
+                        case "A": {
+                            Intent planetIntent = new Intent(GamePickerActivity.this, PlanetActivity.class);
+                            planetIntent.putExtra("GamesComplete", complete);
+                            startActivity(planetIntent);
+                            break;
+                        }
+                        case "B": {
+                            Intent cameraIntent = new Intent(GamePickerActivity.this, CameraInstructionActivity.class);
+                            cameraIntent.putExtra("GamesComplete", complete);
+                            startActivity(cameraIntent);
+                            break;
+                        }
+                        case "C": {
+                            Intent paintingIntent = new Intent(GamePickerActivity.this, CatchPaintingActivity.class);
+                            paintingIntent.putExtra("GamesComplete", complete);
+                            startActivity(paintingIntent);
+                            break;
+                        }
 
+                    }
                 }
             }
         });
@@ -229,7 +230,6 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         // Save the user's current game state
-
     }
 
 
@@ -345,10 +345,10 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
 
         switch (uid) {
             case "a7ae2eb7-1f00-4168-b99b-a749bac1ca64":
-                return "C";
+                return "A";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10001":
-                return "C";
+                return "B";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10002":
                 return "C";

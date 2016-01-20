@@ -38,6 +38,7 @@
     <string name="child_intro">Find the 3 exhibits. Beat the game at each exhibit to win!</string>
     <string name="a_button">Galaxy Exhibit</string>
     <string name="b_button">Liberty Selfie</string>
+    <string name="b_button_adult">Liberty Display</string>
     <string name="c_button">Famous Paintings</string>
     <string name="score">Score: 0</string>
     <string name="title_activity_monitoring">MonitoringActivity</string>
@@ -64,10 +65,26 @@
     <string name="factpicker_galaxy">You\'ve reached the Galaxy exhibit. Click the button to learn more about your solar system.</string>
     <string name="factpicker_statue">The World Wonders Exhibit. Click to learn about France\'s largest gift.</string>
     <string name="factpicker_monalisa">The paintings exhibit. Click for info on the famous painting: Mona Lisa.</string>
+    <string name="factpicker_galaxy_complete">Hope you learned something new about our solar system. Now move to the next exhibit.</string>
+    <string name="factpicker_statue_complete">That\'s it about the statue of liberty. When you\'re ready, find your next exhibit</string>
+    <string name="factpicker_monalisa_complete">Isn\'t the Mona Lisa amazing? When you\'re done, move to the next exhibit.</string>
     <string name="factpicker_default">We\'ll let you know when you\'re at an exhibit.</string>
     <string name="title_activity_teacher">TeacherActivity</string>
     <string name="teacher_header_name">Name</string>
     <string name="teacher_header_location">Location</string>
     <string name="teacher_header_score">Score</string>
+    <string name="gamepicker_galaxy_complete">You are smart! Good work ordering the planets, now go find the next exhibit.</string>
+    <string name="gamepicker_galaxy">This is the Galaxy Exhibit! In this game you must order the planets in our solar system. Ready?</string>
+    <string name="gamepicker_statue_complete">Nice Selfie! Now get to your next exhibit!</string>
+    <string name="gamepicker_statue">The World Wonders Exhibit. Take a picture of yourself with the statue of liberty. Ready?</string>
+    <string name="gamepicker_monalisa_complete">Great work. You collected a lot of paintings! Now move to the next exhibit!</string>
+    <string name="gamepicker_monalisa">Wow look at the famous paintings! In this game tilt the phone to catch as many paintings as you can in the time limit. Ready?</string>
+    <string name="gamepicker_default">We\'ll let you know when you\'re at an exhibit.</string>
+    <string name="planetbuttontext">Play Planet Game</string>
+    <string name="statuebuttontext">Play Liberty Statue Game</string>
+    <string name="paintingbuttontext">Play Catch Game</string>
+    <string name="factstatuetext">Enter Liberty Exhibit</string>
+    <string name="factplanettext">Enter Planet Exhibit</string>
+    <string name="factpaintingstext">Enter Famous Paintings Exhibit</string>
 
 </resources>

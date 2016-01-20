@@ -97,7 +97,7 @@
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:background="@drawable/main_menu_child_button"
-                android:contentDescription="@string/b_button"
+                android:contentDescription="@string/b_button_adult"
                 android:gravity="center_horizontal|center_vertical"/>
 
 
@@ -107,7 +107,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:paddingTop="10dp"
-                android:text="@string/b_button"
+                android:text="@string/b_button_adult"
                 android:textColor="#ffffff"
                 android:textSize="12sp"
                 android:textStyle="bold"

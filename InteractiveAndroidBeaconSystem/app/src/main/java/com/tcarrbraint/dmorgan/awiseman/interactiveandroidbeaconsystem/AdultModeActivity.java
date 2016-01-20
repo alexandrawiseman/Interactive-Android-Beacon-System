@@ -33,23 +33,23 @@ public class AdultModeActivity extends Activity
         {
             complete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
-        if(getIntent().getBooleanArrayExtra("beacon") != null)
+        if(getIntent().getStringExtra("beacon") != null)
         {
             beacon = getIntent().getStringExtra("beacon");
         }
 
-        beacon = "A";
+        //beacon = "A";
 
         mAdultImage = (ImageView) findViewById(R.id.adult_image);
-        if(beacon == "A")
+        if(beacon.equals("C"))
         {
             mAdultImage.setImageResource(R.drawable.monalisa);
         }
-        else if(beacon == "B")
+        else if(beacon.equals("B"))
         {
             mAdultImage.setImageResource(R.drawable.statueofliberty_blackandwhite);
         }
-        else if(beacon == "C")
+        else if(beacon.equals("A"))
         {
             mAdultImage.setImageResource(R.drawable.planets);
         }
@@ -82,15 +82,15 @@ public class AdultModeActivity extends Activity
         });
 
         mFact = (TextView) findViewById(R.id.fact_text);
-        if(beacon == "A")
+        if(beacon.equals("C"))
         {
             mFact.setText(getResources().getString(R.string.adult_painting_1));
         }
-        else if(beacon == "B")
+        else if(beacon.equals("B"))
         {
             mFact.setText(getResources().getString(R.string.adult_statue_1));
         }
-        else if(beacon == "C")
+        else if(beacon.equals("A"))
         {
             mFact.setText(getResources().getString(R.string.adult_planets_1));
         }
@@ -103,7 +103,7 @@ public class AdultModeActivity extends Activity
             {
                 mFactCount++;
 
-                if(beacon == "A")
+                if(beacon.equals("C"))
                 {
                     if (mFactCount >= mPaintingStrings.length)
                     {
@@ -111,7 +111,7 @@ public class AdultModeActivity extends Activity
                     }
                     mFact.setText(mPaintingStrings[mFactCount]);
                 }
-                else if(beacon == "B")
+                else if(beacon.equals("B"))
                 {
                     if (mFactCount >= mStatueStrings.length)
                     {
@@ -119,7 +119,7 @@ public class AdultModeActivity extends Activity
                     }
                     mFact.setText(mStatueStrings[mFactCount]);
                 }
-                else if(beacon == "C")
+                else if(beacon.equals("A"))
                 {
                     if (mFactCount >= mPlanetStrings.length)
                     {
