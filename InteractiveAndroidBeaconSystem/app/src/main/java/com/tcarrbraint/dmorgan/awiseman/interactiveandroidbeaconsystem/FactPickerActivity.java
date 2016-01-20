@@ -3,6 +3,7 @@ package com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,37 +48,70 @@ public class FactPickerActivity extends Activity implements BeaconConsumer {
         @Override
         public void run() {
             if (savelast != saveIdentity) {
-                switch (saveIdentity) {
-                    case "A": {
-                        logToDisplay(getResources().getString(R.string.factpicker_galaxy));
-                        layoutbackground.setBackgroundColor(Color.BLUE);
-                        playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText("Enter Planet Exhibit");
-                        break;
-                    }
-                    case "B": {
-                        logToDisplay(getResources().getString(R.string.factpicker_statue));
-                        layoutbackground.setBackgroundColor(Color.RED);
-                        playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText("Enter Liberty Exhibit");
-                        break;
-                    }
-                    case "C": {
-                        logToDisplay(getResources().getString(R.string.factpicker_monalisa));
-                        layoutbackground.setBackgroundResource(R.color.regionc_color);
-                        playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText("Enter Famous Paintings Exhibit");
-                        break;
-                    }
-                    default: {
-                        logToDisplay(getResources().getString(R.string.factpicker_default));
-                        layoutbackground.setBackgroundResource(R.color.main_menu_background);
-                        playbutton.setVisibility(View.GONE);
-                        break;
-                    }
+                if (complete[0] && complete[1] && complete[2]) {
+                    logToDisplay("You made it to all of our exhibits. We hope you enjoyed the museum.");
+                    playbutton.setClickable(true);
+                    playbutton.getBackground().setColorFilter(null);
+                    layoutbackground.setBackgroundColor(Color.MAGENTA);
+                    playbutton.setVisibility(View.VISIBLE);
+                    playbutton.setText("Back to Main Menu");
+                } else if (savelast != saveIdentity) {
+                    switch (saveIdentity) {
+                        case "A": {
+                            layoutbackground.setBackgroundColor(Color.BLUE);
+                            playbutton.setVisibility(View.VISIBLE);
+                            playbutton.setText(R.string.factplanettext);
+                            if (complete[0]){
+                                logToDisplay(getResources().getString(R.string.factpicker_galaxy_complete));
+                                playbutton.setClickable(false);
+                                playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
+                            } else {
+                                logToDisplay(getResources().getString(R.string.factpicker_galaxy));
+                                playbutton.setClickable(true);
+                                playbutton.getBackground().setColorFilter(null);
+                            }
+                            break;
+                        }
+                        case "B": {
+                            layoutbackground.setBackgroundColor(Color.RED);
+                            playbutton.setVisibility(View.VISIBLE);
+                            playbutton.setText(R.string.factstatuetext);
+                            if (complete[1]){
+                                logToDisplay(getResources().getString(R.string.factpicker_statue_complete));
+                                playbutton.setClickable(false);
+                                playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
+                            } else {
+                                logToDisplay(getResources().getString(R.string.factpicker_statue));
+                                playbutton.setClickable(true);
+                                playbutton.getBackground().setColorFilter(null);
+                            }
+                            break;
+                        }
+                        case "C": {
+                            layoutbackground.setBackgroundResource(R.color.regionc_color);
+                            playbutton.setVisibility(View.VISIBLE);
+                            playbutton.setText(R.string.factpaintingstext);
+                            if (complete[2]){
+                                logToDisplay(getString(R.string.factpicker_monalisa_complete));
+                                playbutton.setClickable(false);
+                                playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
+                            } else {
+                                logToDisplay(getResources().getString(R.string.factpicker_monalisa));
+                                playbutton.setClickable(true);
+                                playbutton.getBackground().setColorFilter(null);
+                            }
+                            break;
+                        }
+                        default: {
+                            logToDisplay(getResources().getString(R.string.factpicker_default));
+                            layoutbackground.setBackgroundResource(R.color.main_menu_background);
+                            playbutton.setVisibility(View.GONE);
+                            break;
+                        }
 
+                    }
+                    savelast = saveIdentity;
                 }
-                savelast = saveIdentity;
             }
 
             timerHandler.postDelayed(this, 1000);
@@ -92,7 +126,7 @@ public class FactPickerActivity extends Activity implements BeaconConsumer {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_picker);
+        setContentView(R.layout.activity_fact_picker);
         if(getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
             complete = getIntent().getBooleanArrayExtra("GamesComplete");
@@ -100,15 +134,15 @@ public class FactPickerActivity extends Activity implements BeaconConsumer {
 
         if (complete[0]) {
             ImageButton buttona = (ImageButton) FactPickerActivity.this.findViewById(R.id.aButton);
-            buttona.setImageResource(R.drawable.a_icon);
+            buttona.setImageResource(R.drawable.check_icon);
         }
         if (complete[1]) {
             ImageButton buttonb = (ImageButton) FactPickerActivity.this.findViewById(R.id.bButton);
-            buttonb.setImageResource(R.drawable.b_icon);
+            buttonb.setImageResource(R.drawable.check_icon);
         }
         if (complete[2]) {
             ImageButton buttonc = (ImageButton) FactPickerActivity.this.findViewById(R.id.cButton);
-            buttonc.setImageResource(R.drawable.c_icon);
+            buttonc.setImageResource(R.drawable.check_icon);
         }
 
         layoutbackground = (LinearLayout) FactPickerActivity.this.findViewById(R.id.backlayout);
@@ -160,30 +194,36 @@ public class FactPickerActivity extends Activity implements BeaconConsumer {
         playbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (saveIdentity) {
-                    case "A": {
-                        Intent planetIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
-                        planetIntent.putExtra("GamesComplete", complete);
-                        planetIntent.putExtra("beacon", saveIdentity);
-                        startActivity(planetIntent);
-                        break;
-                    }
-                    case "B": {
-                        Intent cameraIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
-                        cameraIntent.putExtra("GamesComplete", complete);
-                        cameraIntent.putExtra("beacon", saveIdentity);
-                        startActivity(cameraIntent);
-                        break;
-                    }
-                    case "C": {
-                        Intent paintingIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
-                        paintingIntent.putExtra("GamesComplete", complete);
-                        paintingIntent.putExtra("beacon", saveIdentity);
-                        startActivity(paintingIntent);
+                if (complete[0] && complete[1] && complete[2]) {
+                    Intent doneIntent = new Intent(FactPickerActivity.this, MainMenu.class);
+                    startActivity(doneIntent);
+                } else {
 
-                        break;
-                    }
+                    switch (saveIdentity) {
+                        case "A": {
+                            Intent planetIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
+                            planetIntent.putExtra("GamesComplete", complete);
+                            planetIntent.putExtra("beacon", saveIdentity);
+                            startActivity(planetIntent);
+                            break;
+                        }
+                        case "B": {
+                            Intent cameraIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
+                            cameraIntent.putExtra("GamesComplete", complete);
+                            cameraIntent.putExtra("beacon", saveIdentity);
+                            startActivity(cameraIntent);
+                            break;
+                        }
+                        case "C": {
+                            Intent paintingIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
+                            paintingIntent.putExtra("GamesComplete", complete);
+                            paintingIntent.putExtra("beacon", saveIdentity);
+                            startActivity(paintingIntent);
 
+                            break;
+                        }
+
+                    }
                 }
             }
         });
@@ -312,10 +352,10 @@ public class FactPickerActivity extends Activity implements BeaconConsumer {
 
         switch (uid) {
             case "a7ae2eb7-1f00-4168-b99b-a749bac1ca64":
-                return "C";
+                return "A";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10001":
-                return "C";
+                return "B";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10002":
                 return "C";
