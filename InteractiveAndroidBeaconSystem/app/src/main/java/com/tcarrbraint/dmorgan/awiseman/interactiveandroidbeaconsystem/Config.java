@@ -11,6 +11,7 @@ public class Config {
     public static final String URL_GET_EMP = "http://interactivebluetooth.ddns.net/Android/498_Project/getEmp.php?id=";
     public static final String URL_UPDATE_EMP = "http://interactivebluetooth.ddns.net/Android/498_Project/updateEmp.php";
     public static final String URL_DELETE_EMP = "http://interactivebluetooth.ddns.net/Android/498_Project/deleteEmp.php?id=";
+    public static final String URL_GET_ID = "http://interactivebluetooth.ddns.net/Android/498_Project/getID.php";
 
     //Keys that will be used to send the request to php scripts
     public static final String KEY_EMP_ID = "id";

@@ -77,8 +77,9 @@ public class RequestHandler {
 
     public String sendGetRequest(String requestURL){
         StringBuilder sb =new StringBuilder();
+        URL url;
         try {
-            URL url = new URL(requestURL);
+            url = new URL(requestURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
