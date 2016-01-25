@@ -19,6 +19,7 @@ public class PlanetActivity extends Activity
     private List<Integer> planetList;
     private HashMap hm;
     private boolean[] complete = new boolean[3];
+    private int studentID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,6 +31,8 @@ public class PlanetActivity extends Activity
         {
             complete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
+
+        studentID = getIntent().getIntExtra("gamePickerID", 0);
 
         mButtons[0] = (Button) findViewById(R.id.b1);
         mButtons[1] = (Button) findViewById(R.id.b2);
@@ -203,6 +206,7 @@ public class PlanetActivity extends Activity
                 submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 complete[0] = true;
                 submitIntent.putExtra("GamesComplete", complete);
+                submitIntent.putExtra("gamePickerID", studentID);
                 startActivity(submitIntent);
             }
         });

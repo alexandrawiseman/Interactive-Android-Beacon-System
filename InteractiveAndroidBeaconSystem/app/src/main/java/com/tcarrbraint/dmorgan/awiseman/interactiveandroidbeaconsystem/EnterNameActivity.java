@@ -104,6 +104,7 @@ public class EnterNameActivity extends Activity{
 
         Intent pickerIntent = new Intent(EnterNameActivity.this, GamePickerActivity.class);
         Log.d("EnterNameActivity", "Student ID: " + studentID);
+        pickerIntent.putExtra("gamePickerID", studentID);
         startActivity(pickerIntent);
     }
 

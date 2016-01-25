@@ -3,6 +3,7 @@ package com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -10,6 +11,7 @@ public class CatchPaintingActivity extends Activity {
 
     protected GameSurfaceView gameView;
     private boolean[] complete = new boolean[3];
+    private int studentID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -17,6 +19,9 @@ public class CatchPaintingActivity extends Activity {
         {
             complete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
+
+        studentID = getIntent().getIntExtra("gamePickerID", 0);
+        Log.d("GamePickerActivity", "Student ID: " + studentID);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
@@ -44,6 +49,7 @@ public class CatchPaintingActivity extends Activity {
         submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         complete[2] = true;
         submitIntent.putExtra("GamesComplete", complete);
+        submitIntent.putExtra("gamePickerID", studentID);
         startActivity(submitIntent);
     }
 
