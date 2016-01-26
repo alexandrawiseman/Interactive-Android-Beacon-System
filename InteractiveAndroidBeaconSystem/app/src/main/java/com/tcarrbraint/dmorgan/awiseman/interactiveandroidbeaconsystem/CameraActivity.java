@@ -149,6 +149,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback
     @Override
     public void surfaceCreated(SurfaceHolder holder)
     {
+        //Android Players issues changed from CAMERA_FACING_BACK
         camera = Camera.open(CameraInfo.CAMERA_FACING_FRONT);
     }
 

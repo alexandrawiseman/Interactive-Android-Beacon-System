@@ -148,9 +148,9 @@ public class FactPickerActivity extends Activity implements BeaconConsumer {
         layoutbackground = (LinearLayout) FactPickerActivity.this.findViewById(R.id.backlayout);
         playbutton = (Button) FactPickerActivity.this.findViewById(R.id.playgame);
 
-        Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC1CA64"), Identifier.parse("1"), Identifier.parse("1"));
+        Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10172"), Identifier.parse("1"), Identifier.parse("1"));
         Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10001"), Identifier.parse("1"), Identifier.parse("2"));
-        Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10002"), Identifier.parse("1"), Identifier.parse("2"));
+        Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10101"), Identifier.parse("1"), Identifier.parse("2"));
         try {
             beaconManager.startMonitoringBeaconsInRegion(region1);
         } catch (RemoteException e) {
@@ -177,7 +177,7 @@ public class FactPickerActivity extends Activity implements BeaconConsumer {
         BeaconManager.setRssiFilterImplClass(RunningAverageRssiFilter.class);
         RunningAverageRssiFilter.setSampleExpirationMilliseconds(2000);
 
-        //set active scan time to 0.5sec
+        //set active scan time to 0.5sec players=20001
         beaconManager.setForegroundScanPeriod(500l);
         beaconManager.setForegroundBetweenScanPeriod(0l);
         try {
@@ -351,13 +351,13 @@ public class FactPickerActivity extends Activity implements BeaconConsumer {
     private String identify(String uid) {
 
         switch (uid) {
-            case "a7ae2eb7-1f00-4168-b99b-a749bac1ca64":
+            case "a7ae2eb7-1f00-4168-b99b-a749bac10172":
                 return "A";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10001":
                 return "B";
 
-            case "a7ae2eb7-1f00-4168-b99b-a749bac10002":
+            case "a7ae2eb7-1f00-4168-b99b-a749bac10101":
                 return "C";
 
             default:
