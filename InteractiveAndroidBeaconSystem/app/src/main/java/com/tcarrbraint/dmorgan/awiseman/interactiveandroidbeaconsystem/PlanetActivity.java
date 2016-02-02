@@ -81,7 +81,7 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9)
+                if (planetNumber < 9 && mButtons[0].getText().toString() == "")
                 {
                     mButtons[0].setText(Integer.toString(planetNumber));
                     planetNumber++;
@@ -94,7 +94,7 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9)
+                if (planetNumber < 9 && mButtons[1].getText().toString() == "")
                 {
                     mButtons[1].setText(Integer.toString(planetNumber));
                     planetNumber++;
@@ -107,7 +107,7 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9)
+                if (planetNumber < 9 && mButtons[2].getText().toString() == "")
                 {
                     mButtons[2].setText(Integer.toString(planetNumber));
                     planetNumber++;
@@ -120,7 +120,7 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9)
+                if (planetNumber < 9 && mButtons[3].getText().toString() == "")
                 {
                     mButtons[3].setText(Integer.toString(planetNumber));
                     planetNumber++;
@@ -133,7 +133,7 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9)
+                if (planetNumber < 9 && mButtons[4].getText().toString() == "")
                 {
                     mButtons[4].setText(Integer.toString(planetNumber));
                     planetNumber++;
@@ -146,7 +146,7 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9)
+                if (planetNumber < 9 && mButtons[5].getText().toString() == "")
                 {
                     mButtons[5].setText(Integer.toString(planetNumber));
                     planetNumber++;
@@ -159,7 +159,7 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9)
+                if (planetNumber < 9 && mButtons[6].getText().toString() == "")
                 {
                     mButtons[6].setText(Integer.toString(planetNumber));
                     planetNumber++;
@@ -172,7 +172,7 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9)
+                if (planetNumber < 9 && mButtons[7].getText().toString() == "")
                 {
                     mButtons[7].setText(Integer.toString(planetNumber));
                     planetNumber++;
