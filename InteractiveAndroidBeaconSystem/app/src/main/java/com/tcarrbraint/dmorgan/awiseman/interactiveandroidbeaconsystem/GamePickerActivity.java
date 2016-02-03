@@ -45,8 +45,7 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
     private String saveIdentity = "D";
     private boolean[] complete = new boolean[3];
     private int studentID;
-    private String location;
-    private int score = 0;
+    private int score;
 
     long startTime = 0;
     //runs without a timer by reposting this handler at the end of the runnable
@@ -69,13 +68,6 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
                         playbutton.setVisibility(View.VISIBLE);
                         playbutton.setText(R.string.planetbuttontext);
                         if (complete[0]){
-                            Log.d("GamePickerActivity", "Score: " + score);
-                            Log.d("GamePickerActivity", "Location: " + location);
-                            location = "Planets";
-                            score++;
-                            Log.d("GamePickerActivity", "Score: " + score);
-                            Log.d("GamePickerActivity", "Location: " + location);
-                            updateStudent();
                             logToDisplay(getString(R.string.gamepicker_galaxy_complete));
                             playbutton.setClickable(false);
                             playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
@@ -91,9 +83,6 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
                         playbutton.setVisibility(View.VISIBLE);
                         playbutton.setText(R.string.statuebuttontext);
                         if (complete[1]){
-                            location = "Statue of Liberty";
-                            score++;
-                            updateStudent();
                             logToDisplay(getString(R.string.gamepicker_statue_complete));
                             playbutton.setClickable(false);
                             playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
@@ -109,9 +98,6 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
                         playbutton.setVisibility(View.VISIBLE);
                         playbutton.setText(R.string.paintingbuttontext);
                         if (complete[2]){
-                            location = "Mona Lisa";
-                            score++;
-                            updateStudent();
                             logToDisplay(getString(R.string.gamepicker_monalisa_complete));
                             playbutton.setClickable(false);
                             playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
@@ -148,6 +134,7 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
         setContentView(R.layout.activity_game_picker);
 
         studentID = getIntent().getIntExtra("gamePickerID", 0);
+        score = getIntent().getIntExtra("gamePickerScore", 0);
         Log.d("GamePickerActivity", "Student ID: " + studentID);
 
         if(getIntent().getBooleanArrayExtra("GamesComplete") != null)
@@ -172,8 +159,11 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
         playbutton = (Button) GamePickerActivity.this.findViewById(R.id.playgame);
 
         Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10172"), Identifier.parse("1"), Identifier.parse("1"));
+        //Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("1"));
         Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10001"), Identifier.parse("1"), Identifier.parse("2"));
+        //Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("2"));
         Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10101"), Identifier.parse("1"), Identifier.parse("2"));
+        //Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("2"));
         try {
             beaconManager.startMonitoringBeaconsInRegion(region1);
         } catch (RemoteException e) {
@@ -226,6 +216,7 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
                             Intent planetIntent = new Intent(GamePickerActivity.this, PlanetActivity.class);
                             planetIntent.putExtra("GamesComplete", complete);
                             planetIntent.putExtra("gamePickerID", studentID);
+                            planetIntent.putExtra("gamePickerScore", score);
                             startActivity(planetIntent);
                             break;
                         }
@@ -233,6 +224,7 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
                             Intent cameraIntent = new Intent(GamePickerActivity.this, CameraInstructionActivity.class);
                             cameraIntent.putExtra("GamesComplete", complete);
                             cameraIntent.putExtra("gamePickerID", studentID);
+                            cameraIntent.putExtra("gamePickerScore", score);
                             startActivity(cameraIntent);
                             break;
                         }
@@ -240,6 +232,7 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
                             Intent paintingIntent = new Intent(GamePickerActivity.this, CatchPaintingActivity.class);
                             paintingIntent.putExtra("GamesComplete", complete);
                             paintingIntent.putExtra("gamePickerID", studentID);
+                            paintingIntent.putExtra("gamePickerScore", score);
                             startActivity(paintingIntent);
                             break;
                         }
@@ -251,43 +244,6 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-    }
-
-    private void updateStudent(){
-
-        class UpdateStudent extends AsyncTask<Void,Void,String>
-        {
-            ProgressDialog loading;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(GamePickerActivity.this,"Loading...","Wait...",false,false);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                Toast.makeText(GamePickerActivity.this, s, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_EMP_ID,Integer.toString(studentID));
-                hashMap.put(Config.KEY_EMP_DESG,location);
-                hashMap.put(Config.KEY_EMP_SAL,Integer.toString(score));
-
-                RequestHandler rh = new RequestHandler();
-
-                String s = rh.sendPostRequest(Config.URL_UPDATE_EMP,hashMap);
-
-                return s;
-            }
-        }
-
-        UpdateStudent ue = new UpdateStudent();
-        ue.execute();
     }
 
     @Override
@@ -408,13 +364,16 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
     private String identify(String uid) {
 
         switch (uid) {
-            case "a7ae2eb7-1f00-4168-b99b-a749bac10172":
+             case "a7ae2eb7-1f00-4168-b99b-a749bac10172":
+            //case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
                 return "A";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10001":
+            //case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
                 return "B";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10101":
+            //case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
                 return "C";
 
             default:

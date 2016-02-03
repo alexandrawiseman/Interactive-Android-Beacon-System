@@ -1,10 +1,13 @@
 package com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +23,8 @@ public class PlanetActivity extends Activity
     private HashMap hm;
     private boolean[] complete = new boolean[3];
     private int studentID;
+    private int scores;
+    private String location = "Planets";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,6 +38,7 @@ public class PlanetActivity extends Activity
         }
 
         studentID = getIntent().getIntExtra("gamePickerID", 0);
+        scores = getIntent().getIntExtra("gamePickerScore", 0);
 
         mButtons[0] = (Button) findViewById(R.id.b1);
         mButtons[1] = (Button) findViewById(R.id.b2);
@@ -205,8 +211,11 @@ public class PlanetActivity extends Activity
                 Intent submitIntent = new Intent(PlanetActivity.this, GamePickerActivity.class);
                 submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 complete[0] = true;
+                scores = scores + 1;
+                updateStudent();
                 submitIntent.putExtra("GamesComplete", complete);
                 submitIntent.putExtra("gamePickerID", studentID);
+                submitIntent.putExtra("gamePickerScore", score);
                 startActivity(submitIntent);
             }
         });
@@ -226,6 +235,43 @@ public class PlanetActivity extends Activity
         }
 
         return score;
+    }
+
+    private void updateStudent(){
+
+        class UpdateStudent extends AsyncTask<Void,Void,String>
+        {
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(PlanetActivity.this,"Loading...","Wait...",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(PlanetActivity.this, s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                HashMap<String,String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_EMP_ID,Integer.toString(studentID));
+                hashMap.put(Config.KEY_EMP_DESG,location);
+                hashMap.put(Config.KEY_EMP_SAL,Integer.toString(scores));
+
+                RequestHandler rh = new RequestHandler();
+
+                String s = rh.sendPostRequest(Config.URL_UPDATE_EMP,hashMap);
+
+                return s;
+            }
+        }
+
+        UpdateStudent ue = new UpdateStudent();
+        ue.execute();
     }
 
 }

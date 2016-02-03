@@ -35,6 +35,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback
     SurfaceHolder surfaceHolder;
     boolean previewing = false;
     LayoutInflater controlInflater = null;
+    private int studentID;
+    private int score;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -42,6 +44,9 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        studentID = getIntent().getIntExtra("gamePickerID", 0);
+        score = getIntent().getIntExtra("gamePickerScore", 0);
 
         getWindow().setFormat(PixelFormat.UNKNOWN);
         surfaceView = (SurfaceView) findViewById(R.id.camerapreview);
@@ -118,6 +123,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback
             CommonResources.photo = flip;
             Intent cameraIntent = new Intent(CameraActivity.this, CameraSubmitActivity.class);
             cameraIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            cameraIntent.putExtra("gamePickerID", studentID);
+            cameraIntent.putExtra("gamePickerScore", score);
             startActivity(cameraIntent);
         }
     };

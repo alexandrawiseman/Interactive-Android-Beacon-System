@@ -10,12 +10,17 @@ public class CameraInstructionActivity extends Activity
 {
 
     private Button mBeginButton;
+    private int studentID;
+    private int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_instruction);
+
+        studentID = getIntent().getIntExtra("gamePickerID", 0);
+        score = getIntent().getIntExtra("gamePickerScore", 0);
 
         mBeginButton = (Button) findViewById(R.id.begin_button);
         mBeginButton.setOnClickListener(new View.OnClickListener()
@@ -25,6 +30,8 @@ public class CameraInstructionActivity extends Activity
             {
                 Intent cameraIntent = new Intent(CameraInstructionActivity.this, CameraActivity.class);
                 cameraIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                cameraIntent.putExtra("gamePickerID", studentID);
+                cameraIntent.putExtra("gamePickerScore", score);
                 startActivity(cameraIntent);
             }
         });
