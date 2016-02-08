@@ -37,6 +37,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback
     LayoutInflater controlInflater = null;
     private int studentID;
     private int score;
+    private boolean[] complete = new boolean[3];
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -44,7 +45,10 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
+        if(getIntent().getBooleanArrayExtra("GamesComplete") != null)
+        {
+            complete = getIntent().getBooleanArrayExtra("GamesComplete");
+        }
         studentID = getIntent().getIntExtra("gamePickerID", 0);
         score = getIntent().getIntExtra("gamePickerScore", 0);
 
@@ -123,6 +127,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback
             CommonResources.photo = flip;
             Intent cameraIntent = new Intent(CameraActivity.this, CameraSubmitActivity.class);
             cameraIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            cameraIntent.putExtra("GamesComplete", complete);
             cameraIntent.putExtra("gamePickerID", studentID);
             cameraIntent.putExtra("gamePickerScore", score);
             startActivity(cameraIntent);

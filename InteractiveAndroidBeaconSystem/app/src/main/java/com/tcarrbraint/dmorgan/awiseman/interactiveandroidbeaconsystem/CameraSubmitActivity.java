@@ -37,7 +37,6 @@ public class CameraSubmitActivity extends Activity
         {
             complete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
-
         studentID = getIntent().getIntExtra("gamePickerID", 0);
         score = getIntent().getIntExtra("gamePickerScore", 0);
         Log.d("GamePickerActivity", "Student ID Camera: " + studentID);
