@@ -160,8 +160,8 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
 
         Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10172"), Identifier.parse("1"), Identifier.parse("1"));
         //Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("1"));
-        Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10001"), Identifier.parse("1"), Identifier.parse("2"));
-        //Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("2"));
+        //Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10001"), Identifier.parse("1"), Identifier.parse("2"));
+        Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("2"));
         Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10101"), Identifier.parse("1"), Identifier.parse("2"));
         //Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("2"));
         try {
@@ -368,8 +368,8 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
             //case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
                 return "A";
 
-            case "a7ae2eb7-1f00-4168-b99b-a749bac10001":
-            //case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
+            //case "a7ae2eb7-1f00-4168-b99b-a749bac10001":
+            case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
                 return "B";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10101":

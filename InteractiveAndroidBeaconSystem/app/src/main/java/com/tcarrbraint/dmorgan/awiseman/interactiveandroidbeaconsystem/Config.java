@@ -12,12 +12,14 @@ public class Config {
     public static final String URL_UPDATE_EMP = "http://interactivebluetooth.ddns.net/Android/498_Project/updateEmp.php";
     public static final String URL_DELETE_EMP = "http://interactivebluetooth.ddns.net/Android/498_Project/deleteEmp.php?id=";
     public static final String URL_GET_ID = "http://interactivebluetooth.ddns.net/Android/498_Project/getID.php";
+    public static final String URL_ADD_IMAGE = "http://interactivebluetooth.ddns.net/Android/498_Project/getImage.php";
 
     //Keys that will be used to send the request to php scripts
     public static final String KEY_EMP_ID = "id";
     public static final String KEY_EMP_NAME = "name";
     public static final String KEY_EMP_DESG = "loc";
     public static final String KEY_EMP_SAL = "score";
+    public static final String KEY_EMP_IMG = "image";
 
     //JSON Tags
     public static final String TAG_JSON_ARRAY="result";
