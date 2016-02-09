@@ -55,13 +55,6 @@ public class CatchPaintingActivity extends Activity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        Intent submitIntent = new Intent(CatchPaintingActivity.this, GamePickerActivity.class);
-        submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        complete[2] = true;
-        submitIntent.putExtra("GamesComplete", complete);
-        submitIntent.putExtra("gamePickerID", studentID);
-        submitIntent.putExtra("gamePickerScore", score);
-        startActivity(submitIntent);
     }
 
     private void updateStudent(){
@@ -78,6 +71,13 @@ public class CatchPaintingActivity extends Activity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 Toast.makeText(CatchPaintingActivity.this, s, Toast.LENGTH_LONG).show();
+                Intent submitIntent = new Intent(CatchPaintingActivity.this, GamePickerActivity.class);
+                submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                complete[2] = true;
+                submitIntent.putExtra("GamesComplete", complete);
+                submitIntent.putExtra("gamePickerID", studentID);
+                submitIntent.putExtra("gamePickerScore", score);
+                startActivity(submitIntent);
             }
 
             @Override
