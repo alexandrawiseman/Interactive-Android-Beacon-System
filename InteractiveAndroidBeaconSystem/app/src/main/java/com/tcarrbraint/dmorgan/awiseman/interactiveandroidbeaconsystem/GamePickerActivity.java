@@ -1,12 +1,10 @@
 package com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -16,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -33,7 +30,6 @@ import org.altbeacon.beacon.service.RunningAverageRssiFilter;
 
 import java.text.DecimalFormat;
 import java.util.Collection;
-import java.util.HashMap;
 
 
 public class GamePickerActivity extends Activity implements BeaconConsumer {
@@ -160,7 +156,7 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
 
         Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10172"), Identifier.parse("1"), Identifier.parse("1"));
         //Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("1"));
-        Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10001"), Identifier.parse("1"), Identifier.parse("2"));
+        Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007   "), Identifier.parse("1"), Identifier.parse("2"));
         //Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("2"));
         Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10101"), Identifier.parse("1"), Identifier.parse("2"));
         //Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("2"));
@@ -368,7 +364,7 @@ public class GamePickerActivity extends Activity implements BeaconConsumer {
             //case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
                 return "A";
 
-            case "a7ae2eb7-1f00-4168-b99b-a749bac10001":
+            case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
             //case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
                 return "B";
 
