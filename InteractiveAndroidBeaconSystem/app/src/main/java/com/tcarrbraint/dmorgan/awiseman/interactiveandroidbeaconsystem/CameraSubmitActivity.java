@@ -71,6 +71,9 @@ public class CameraSubmitActivity extends Activity
             {
                 Intent redoIntent = new Intent(CameraSubmitActivity.this, CameraActivity.class);
                 redoIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                redoIntent.putExtra("GamesComplete", complete);
+                redoIntent.putExtra("gamePickerID", studentID);
+                redoIntent.putExtra("gamePickerScore", score);
                 startActivity(redoIntent);
             }
         });
