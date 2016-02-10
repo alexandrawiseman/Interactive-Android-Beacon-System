@@ -249,7 +249,6 @@ public class PlanetActivity extends Activity
                 submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 complete[0] = true;
                 scores = scores + 1;
-                updateStudent();
                 submitIntent.putExtra("GamesComplete", complete);
                 submitIntent.putExtra("gamePickerID", studentID);
                 submitIntent.putExtra("gamePickerScore", scores);
