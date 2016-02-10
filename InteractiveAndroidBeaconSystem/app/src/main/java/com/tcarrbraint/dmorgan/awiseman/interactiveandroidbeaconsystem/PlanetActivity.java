@@ -205,6 +205,7 @@ public class PlanetActivity extends Activity
                 System.out.println(v.getBackground());
                 int score = getGrade();
                 System.out.println("GRADE = " + score + "/8");
+                updateStudent();
                 //Intent mainMenuIntent = new Intent(PlanetActivity.this, MainMenu.class);
                 //mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 //startActivity(mainMenuIntent);
