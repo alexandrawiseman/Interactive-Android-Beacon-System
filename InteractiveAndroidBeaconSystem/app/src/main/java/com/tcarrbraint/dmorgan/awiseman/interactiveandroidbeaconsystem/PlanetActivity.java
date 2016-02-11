@@ -205,6 +205,7 @@ public class PlanetActivity extends Activity
                 System.out.println(v.getBackground());
                 int score = getGrade();
                 System.out.println("GRADE = " + score + "/8");
+                scores = scores + 1;
                 updateStudent();
                 //Intent mainMenuIntent = new Intent(PlanetActivity.this, MainMenu.class);
                 //mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -248,7 +249,6 @@ public class PlanetActivity extends Activity
                 Intent submitIntent = new Intent(PlanetActivity.this, GamePickerActivity.class);
                 submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 complete[0] = true;
-                scores = scores + 1;
                 submitIntent.putExtra("GamesComplete", complete);
                 submitIntent.putExtra("gamePickerID", studentID);
                 submitIntent.putExtra("gamePickerScore", scores);
