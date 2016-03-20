@@ -22,7 +22,7 @@ public class CameraInstructionActivity extends Activity
 
         studentID = getIntent().getIntExtra("gamePickerID", 0);
         score = getIntent().getIntExtra("gamePickerScore", 0);
-        if(getIntent().getBooleanArrayExtra("GamesComplete") != null)
+        if (getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
             complete = getIntent().getBooleanArrayExtra("GamesComplete");
         }

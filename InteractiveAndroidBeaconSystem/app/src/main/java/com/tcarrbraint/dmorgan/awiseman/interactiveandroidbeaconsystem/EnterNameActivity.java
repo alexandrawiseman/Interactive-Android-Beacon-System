@@ -9,12 +9,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 
-public class EnterNameActivity extends Activity{
+public class EnterNameActivity extends Activity
+{
 
     private EditText mNameEditText;
     private Button mSubmitName;
@@ -22,16 +25,19 @@ public class EnterNameActivity extends Activity{
     private String JSON_STRING = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_name);
 
         mNameEditText = (EditText) findViewById(R.id.name_editText);
         mSubmitName = (Button) findViewById(R.id.submitname);
-        mSubmitName.setOnClickListener(new View.OnClickListener() {
+        mSubmitName.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                if(!mNameEditText.getText().toString().matches(""))
+            public void onClick(View v)
+            {
+                if (!mNameEditText.getText().toString().matches(""))
                 {
                     addStudent();
                     getJSON();
@@ -40,40 +46,46 @@ public class EnterNameActivity extends Activity{
         });
 
         Button backbutton = (Button) findViewById(R.id.backbutton);
-        backbutton.setOnClickListener(new View.OnClickListener() {
+        backbutton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 finish();
             }
         });
     }
 
-    private void addStudent(){
+    private void addStudent()
+    {
 
         final String name = mNameEditText.getText().toString().trim();
 
-        class AddStudent extends AsyncTask<Void,Void,String>
+        class AddStudent extends AsyncTask<Void, Void, String>
         {
 
             ProgressDialog loading;
 
             @Override
-            protected void onPreExecute() {
+            protected void onPreExecute()
+            {
                 super.onPreExecute();
-                loading = ProgressDialog.show(EnterNameActivity.this,"Adding...","Wait...",false,false);
+                loading = ProgressDialog.show(EnterNameActivity.this, "Adding...", "Wait...", false, false);
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            protected void onPostExecute(String s)
+            {
                 super.onPostExecute(s);
                 loading.dismiss();
             }
 
             @Override
-            protected String doInBackground(Void... v) {
-                HashMap<String,String> params = new HashMap<>();
-                params.put(Config.KEY_EMP_NAME,name);
-                params.put(Config.KEY_EMP_DESG,"");
+            protected String doInBackground(Void... v)
+            {
+                HashMap<String, String> params = new HashMap<>();
+                params.put(Config.KEY_EMP_NAME, name);
+                params.put(Config.KEY_EMP_DESG, "");
                 String put = params.put(Config.KEY_EMP_SAL, "0");
 
                 RequestHandler rh = new RequestHandler();
@@ -87,7 +99,8 @@ public class EnterNameActivity extends Activity{
     }
 
 
-    private void showID(){
+    private void showID()
+    {
         JSONObject jsonObject = null;
         try
         {
@@ -96,8 +109,7 @@ public class EnterNameActivity extends Activity{
             JSONObject jo = result.getJSONObject(0);
             String id = jo.getString(Config.TAG_ID);
             studentID = Integer.parseInt(id.trim());
-        }
-        catch (JSONException e)
+        } catch (JSONException e)
         {
             e.printStackTrace();
         }
@@ -108,18 +120,23 @@ public class EnterNameActivity extends Activity{
         startActivity(pickerIntent);
     }
 
-    private void getJSON(){
-        class GetJSON extends AsyncTask<Void,Void,String>{
+    private void getJSON()
+    {
+        class GetJSON extends AsyncTask<Void, Void, String>
+        {
 
             ProgressDialog loading;
+
             @Override
-            protected void onPreExecute() {
+            protected void onPreExecute()
+            {
                 super.onPreExecute();
-                loading = ProgressDialog.show(EnterNameActivity.this,"Loading Games...","Wait...",false,false);
+                loading = ProgressDialog.show(EnterNameActivity.this, "Loading Games...", "Wait...", false, false);
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            protected void onPostExecute(String s)
+            {
                 super.onPostExecute(s);
                 loading.dismiss();
                 JSON_STRING = s;
@@ -127,7 +144,8 @@ public class EnterNameActivity extends Activity{
             }
 
             @Override
-            protected String doInBackground(Void... params) {
+            protected String doInBackground(Void... params)
+            {
                 RequestHandler rh = new RequestHandler();
                 String s = rh.sendGetRequest(Config.URL_GET_ID);
                 return s;

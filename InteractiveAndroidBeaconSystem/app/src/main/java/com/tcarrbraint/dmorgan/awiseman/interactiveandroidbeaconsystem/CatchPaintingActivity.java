@@ -12,7 +12,8 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
-public class CatchPaintingActivity extends Activity {
+public class CatchPaintingActivity extends Activity
+{
 
     protected GameSurfaceView gameView;
     private boolean[] complete = new boolean[3];
@@ -21,9 +22,10 @@ public class CatchPaintingActivity extends Activity {
     private String location = "Mona Lisa";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
-        if(getIntent().getBooleanArrayExtra("GamesComplete") != null)
+        if (getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
             complete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
@@ -38,14 +40,18 @@ public class CatchPaintingActivity extends Activity {
         gameView = new GameSurfaceView(this);
         setContentView(gameView);
     }
+
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
         gameView.resume();
 
     }
+
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         gameView.pause();
         score = score + 1;
@@ -53,22 +59,27 @@ public class CatchPaintingActivity extends Activity {
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy()
+    {
         super.onDestroy();
     }
 
-    private void updateStudent(){
+    private void updateStudent()
+    {
 
-        class UpdateStudent extends AsyncTask<Void,Void,String>
+        class UpdateStudent extends AsyncTask<Void, Void, String>
         {
             ProgressDialog loading;
+
             @Override
-            protected void onPreExecute() {
+            protected void onPreExecute()
+            {
                 super.onPreExecute();
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            protected void onPostExecute(String s)
+            {
                 super.onPostExecute(s);
                 Toast.makeText(CatchPaintingActivity.this, s, Toast.LENGTH_LONG).show();
                 Intent submitIntent = new Intent(CatchPaintingActivity.this, GamePickerActivity.class);
@@ -81,15 +92,16 @@ public class CatchPaintingActivity extends Activity {
             }
 
             @Override
-            protected String doInBackground(Void... params) {
-                HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_EMP_ID,Integer.toString(studentID));
-                hashMap.put(Config.KEY_EMP_DESG,location);
-                hashMap.put(Config.KEY_EMP_SAL,Integer.toString(score));
+            protected String doInBackground(Void... params)
+            {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_EMP_ID, Integer.toString(studentID));
+                hashMap.put(Config.KEY_EMP_DESG, location);
+                hashMap.put(Config.KEY_EMP_SAL, Integer.toString(score));
 
                 RequestHandler rh = new RequestHandler();
 
-                String s = rh.sendPostRequest(Config.URL_UPDATE_EMP,hashMap);
+                String s = rh.sendPostRequest(Config.URL_UPDATE_EMP, hashMap);
 
                 return s;
             }

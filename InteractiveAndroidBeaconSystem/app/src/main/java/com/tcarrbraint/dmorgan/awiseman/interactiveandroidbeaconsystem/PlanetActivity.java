@@ -32,7 +32,7 @@ public class PlanetActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planet);
 
-        if(getIntent().getBooleanArrayExtra("GamesComplete") != null)
+        if (getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
             complete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
@@ -230,19 +230,23 @@ public class PlanetActivity extends Activity
         return score;
     }
 
-    private void updateStudent(){
+    private void updateStudent()
+    {
 
-        class UpdateStudent extends AsyncTask<Void,Void,String>
+        class UpdateStudent extends AsyncTask<Void, Void, String>
         {
             ProgressDialog loading;
+
             @Override
-            protected void onPreExecute() {
+            protected void onPreExecute()
+            {
                 super.onPreExecute();
-                loading = ProgressDialog.show(PlanetActivity.this,"Loading...","Wait...",false,false);
+                loading = ProgressDialog.show(PlanetActivity.this, "Loading...", "Wait...", false, false);
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            protected void onPostExecute(String s)
+            {
                 super.onPostExecute(s);
                 loading.dismiss();
                 Toast.makeText(PlanetActivity.this, s, Toast.LENGTH_LONG).show();
@@ -256,15 +260,16 @@ public class PlanetActivity extends Activity
             }
 
             @Override
-            protected String doInBackground(Void... params) {
-                HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_EMP_ID,Integer.toString(studentID));
-                hashMap.put(Config.KEY_EMP_DESG,location);
-                hashMap.put(Config.KEY_EMP_SAL,Integer.toString(scores));
+            protected String doInBackground(Void... params)
+            {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_EMP_ID, Integer.toString(studentID));
+                hashMap.put(Config.KEY_EMP_DESG, location);
+                hashMap.put(Config.KEY_EMP_SAL, Integer.toString(scores));
 
                 RequestHandler rh = new RequestHandler();
 
-                String s = rh.sendPostRequest(Config.URL_UPDATE_EMP,hashMap);
+                String s = rh.sendPostRequest(Config.URL_UPDATE_EMP, hashMap);
 
                 return s;
             }

@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_menu_background"
-    android:orientation="vertical"
-    android:paddingBottom="0dp"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp"
-    android:paddingTop="0dp"
-    android:id="@+id/backlayout"
-    android:baselineAligned="false">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/main_menu_background"
+              android:orientation="vertical"
+              android:paddingBottom="0dp"
+              android:paddingLeft="30dp"
+              android:paddingRight="30dp"
+              android:paddingTop="0dp"
+              android:id="@+id/backlayout"
+              android:baselineAligned="false">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/child_intro"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:paddingBottom="0dp"
-            android:paddingTop="35dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/child_intro"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingBottom="0dp"
+        android:paddingTop="35dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="beacon status"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:id="@+id/regiontext"
-            android:paddingBottom="20dp"
-            android:paddingTop="35dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:text="beacon status"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:id="@+id/regiontext"
+        android:paddingBottom="20dp"
+        android:paddingTop="35dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
                 android:textColor="#ffffff"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:id="@+id/tableforbutton" />
+                android:id="@+id/tableforbutton"/>
 
         </LinearLayout>
 
@@ -142,7 +142,6 @@
                 android:textStyle="bold"/>
 
         </LinearLayout>
-
 
 
     </LinearLayout>

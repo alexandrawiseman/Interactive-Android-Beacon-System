@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
@@ -36,7 +37,7 @@ public class CameraSubmitActivity extends Activity
         setContentView(R.layout.activity_camera_submit);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        if(getIntent().getBooleanArrayExtra("GamesComplete") != null)
+        if (getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
             complete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
@@ -79,7 +80,8 @@ public class CameraSubmitActivity extends Activity
         });
     }
 
-    public String getStringImage(Bitmap bmp){
+    public String getStringImage(Bitmap bmp)
+    {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
@@ -87,19 +89,23 @@ public class CameraSubmitActivity extends Activity
         return encodedImage;
     }
 
-    private void updateStudent(){
+    private void updateStudent()
+    {
 
-        class UpdateStudent extends AsyncTask<Void,Void,String>
+        class UpdateStudent extends AsyncTask<Void, Void, String>
         {
             ProgressDialog loading;
+
             @Override
-            protected void onPreExecute() {
+            protected void onPreExecute()
+            {
                 super.onPreExecute();
-                loading = ProgressDialog.show(CameraSubmitActivity.this,"Loading...","Wait...",false,false);
+                loading = ProgressDialog.show(CameraSubmitActivity.this, "Loading...", "Wait...", false, false);
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            protected void onPostExecute(String s)
+            {
                 super.onPostExecute(s);
                 loading.dismiss();
                 Toast.makeText(CameraSubmitActivity.this, s, Toast.LENGTH_LONG).show();
@@ -112,15 +118,16 @@ public class CameraSubmitActivity extends Activity
             }
 
             @Override
-            protected String doInBackground(Void... params) {
-                HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_EMP_ID,Integer.toString(studentID));
-                hashMap.put(Config.KEY_EMP_DESG,location);
-                hashMap.put(Config.KEY_EMP_SAL,Integer.toString(score));
+            protected String doInBackground(Void... params)
+            {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_EMP_ID, Integer.toString(studentID));
+                hashMap.put(Config.KEY_EMP_DESG, location);
+                hashMap.put(Config.KEY_EMP_SAL, Integer.toString(score));
 
                 RequestHandler rh = new RequestHandler();
 
-                String s = rh.sendPostRequest(Config.URL_UPDATE_EMP,hashMap);
+                String s = rh.sendPostRequest(Config.URL_UPDATE_EMP, hashMap);
 
                 return s;
             }
@@ -130,21 +137,24 @@ public class CameraSubmitActivity extends Activity
         ue.execute();
     }
 
-    private void addImage(){
+    private void addImage()
+    {
 
-        class AddImage extends AsyncTask<Void,Void,String>
+        class AddImage extends AsyncTask<Void, Void, String>
         {
 
             ProgressDialog loading;
 
             @Override
-            protected void onPreExecute() {
+            protected void onPreExecute()
+            {
                 super.onPreExecute();
-                loading = ProgressDialog.show(CameraSubmitActivity.this,"Adding...","Wait...",false,false);
+                loading = ProgressDialog.show(CameraSubmitActivity.this, "Adding...", "Wait...", false, false);
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            protected void onPostExecute(String s)
+            {
                 super.onPostExecute(s);
                 loading.dismiss();
                 complete[1] = true;
@@ -153,10 +163,11 @@ public class CameraSubmitActivity extends Activity
             }
 
             @Override
-            protected String doInBackground(Void... v) {
-                HashMap<String,String> params = new HashMap<>();
+            protected String doInBackground(Void... v)
+            {
+                HashMap<String, String> params = new HashMap<>();
                 params.put(Config.KEY_EMP_NAME, System.currentTimeMillis() + ".jpg");
-                params.put(Config.KEY_EMP_IMG,imageEncoded);
+                params.put(Config.KEY_EMP_IMG, imageEncoded);
 
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(Config.URL_ADD_IMAGE, params);

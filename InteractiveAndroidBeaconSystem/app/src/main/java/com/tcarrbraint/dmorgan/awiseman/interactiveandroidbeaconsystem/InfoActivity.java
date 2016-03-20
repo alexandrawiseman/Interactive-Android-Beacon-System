@@ -10,6 +10,7 @@ public class InfoActivity extends Activity
 {
 
     private Button mBackButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

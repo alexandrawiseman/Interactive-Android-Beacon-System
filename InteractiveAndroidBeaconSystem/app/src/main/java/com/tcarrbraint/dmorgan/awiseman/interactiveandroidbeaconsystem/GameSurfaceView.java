@@ -27,7 +27,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 
-public class GameSurfaceView extends SurfaceView implements Runnable,SensorEventListener {
+public class GameSurfaceView extends SurfaceView implements Runnable, SensorEventListener
+{
 
     private static final String TAG = "ME";
     private TextView scoretext;
@@ -59,7 +60,8 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
 
     private Context mContext;
 
-    public GameSurfaceView(Context context) {
+    public GameSurfaceView(Context context)
+    {
         super(context);
         mContext = context;
         scoretext = (TextView) findViewById(R.id.score);
@@ -68,43 +70,49 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
 
         sensorManager = (SensorManager) this.getContext().getSystemService(Context.SENSOR_SERVICE);
         holder = getHolder();
-        holder.addCallback(new SurfaceHolder.Callback() {
+        holder.addCallback(new SurfaceHolder.Callback()
+        {
             @Override
-            public void surfaceCreated(SurfaceHolder holder) {
+            public void surfaceCreated(SurfaceHolder holder)
+            {
             }
 
             @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
+            {
                 screenWidth = width;
                 screenHeight = height;
             }
 
             @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
+            public void surfaceDestroyed(SurfaceHolder holder)
+            {
 
             }
         });
 
 
         //declare variables
-        sounds = new SoundPool(10, AudioManager.STREAM_MUSIC,0);
+        sounds = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         sCatch = sounds.load(context, R.raw.catchpainting, 1);
 
 
-        sprites = new Sprite[] {
+        sprites = new Sprite[]{
                 new Sprite(100, 100, BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher)),
         };
-        paintings = new Painting[] {
+        paintings = new Painting[]{
                 new Painting(300, 300, paintingpicker()),
                 new Painting(400, 600, paintingpicker()),
                 new Painting(100, 600, paintingpicker()),
         };
     }
 
-    Bitmap paintingpicker(){
+    Bitmap paintingpicker()
+    {
         Random rand = new Random();
         int rNum = (rand.nextInt(8));
-        switch  (rNum){
+        switch (rNum)
+        {
             case 0:
                 return BitmapFactory.decodeResource(this.getResources(), R.drawable.paint1);
             case 1:
@@ -126,8 +134,10 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
     }
 
     @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+    public void onSensorChanged(SensorEvent sensorEvent)
+    {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+        {
             // the values you were calculating originally here were over 10000!
             x1 = (int) sensorEvent.values[1];
             y1 = (int) sensorEvent.values[2]; // tilt forward = negative
@@ -135,18 +145,21 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
 
         }
 
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_ORIENTATION) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ORIENTATION)
+        {
 
         }
     }
 
 
-
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    public void onAccuracyChanged(Sensor sensor, int accuracy)
+    {
 
     }
-    public void resume() {
+
+    public void resume()
+    {
         isRunning = true;
         gameThread = new Thread(this);
         gameThread.start();
@@ -157,27 +170,36 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
                 SensorManager.SENSOR_DELAY_NORMAL);
     }
-    public void pause() {
+
+    public void pause()
+    {
         isRunning = false;
         boolean retry = true;
-        while (retry) {
-            try {
+        while (retry)
+        {
+            try
+            {
                 gameThread.join();
                 retry = false;
-            } catch (InterruptedException e) {
+            } catch (InterruptedException e)
+            {
                 // try again shutting down the thread
             }
         }
     }
 
 
-    class Painting extends Sprite{
+    class Painting extends Sprite
+    {
 
-        public Painting(int x, int y, Bitmap image) {
+        public Painting(int x, int y, Bitmap image)
+        {
             super(x, y, image);
         }
     }
-    class Sprite {
+
+    class Sprite
+    {
         int x;
         int y;
         int directionX = 1;
@@ -186,66 +208,81 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
         int color = 0;
         Bitmap image;
 
-        public Sprite(int x, int y) {
+        public Sprite(int x, int y)
+        {
             this.x = x;
             this.y = y;
         }
 
-        public Sprite(int x, int y, Bitmap image) {
+        public Sprite(int x, int y, Bitmap image)
+        {
             this(x, y);
             this.image = image;
         }
 
-        public Sprite(int x, int y, Bitmap image, int color) {
+        public Sprite(int x, int y, Bitmap image, int color)
+        {
             this(x, y, image);
             this.color = color;
         }
 
     }
 
-    static Painting[] addElement(Painting[] a, Painting e) {
-        a  = Arrays.copyOf(a, a.length + 1);
+    static Painting[] addElement(Painting[] a, Painting e)
+    {
+        a = Arrays.copyOf(a, a.length + 1);
         a[a.length - 1] = e;
         return a;
     }
 
 
     int counter = 1000;
-    protected void step() {
+
+    protected void step()
+    {
 
         //manage time and add paintings
         counter--;
-        if ((counter == 700) || (counter == 400)){
+        if ((counter == 700) || (counter == 400))
+        {
             paintings = addElement(paintings, new Painting(300, 300, paintingpicker()));
         }
-        if (counter <= 0 ) {
+        if (counter <= 0)
+        {
             //END GAME
-            synchronized (holder) {
+            synchronized (holder)
+            {
                 //quit to mainmenu
                 ((Activity) mContext).finish();
             }
         }
 
         //Move the Paintings
-        for (int index = 0, length = paintings.length; index < length; index++) {
+        for (int index = 0, length = paintings.length; index < length; index++)
+        {
             Painting painting = paintings[index];
-            if ((painting.x < 0) || ((painting.x + painting.image.getWidth()) > screenWidth)) {
+            if ((painting.x < 0) || ((painting.x + painting.image.getWidth()) > screenWidth))
+            {
                 painting.directionX *= -1;
             }
-            if ((painting.y < 0) || ((painting.y + painting.image.getHeight()) > screenHeight)) {
+            if ((painting.y < 0) || ((painting.y + painting.image.getHeight()) > screenHeight))
+            {
                 painting.directionY *= -1;
             }
 
             Rect current = new Rect(painting.x, painting.y,
                     painting.x + painting.image.getWidth(),
                     painting.y + painting.image.getHeight());
-            for (int subindex = 0; subindex < length; subindex++) {
-                if (subindex != index) {
+            for (int subindex = 0; subindex < length; subindex++)
+            {
+                if (subindex != index)
+                {
                     Painting subpainting = paintings[subindex];
                     Rect other = new Rect(subpainting.x, subpainting.y,
                             subpainting.x + subpainting.image.getWidth(),
                             subpainting.y + subpainting.image.getHeight());
-                    if (Rect.intersects(current, other)) {
+                    if (Rect.intersects(current, other))
+                    {
                         // Poor physics implementation.
                         painting.directionX *= -1;
                         painting.directionY *= -1;
@@ -255,38 +292,45 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
 
             int movex = z1 * -3;
             int movey = y1 * -3;
-            painting.x +=  painting.speed * painting.directionX;
+            painting.x += painting.speed * painting.directionX;
             painting.y += painting.speed * painting.directionY;
         }
 
         //Move the Character
-        for (int index = 0; index <= sprites.length - 1; index++) {
+        for (int index = 0; index <= sprites.length - 1; index++)
+        {
             Sprite sprite = sprites[index];
-            if ((sprite.x < 0)) {
+            if ((sprite.x < 0))
+            {
                 //sprite.directionX *= -1;
                 sprite.x += 30;
             }
-            if ((sprite.x + sprite.image.getWidth()) > screenWidth) {
+            if ((sprite.x + sprite.image.getWidth()) > screenWidth)
+            {
                 sprite.x -= 30;
             }
-            if ((sprite.y < 0)) {
+            if ((sprite.y < 0))
+            {
                 //sprite.directionY *= -1;
                 sprite.y += 30;
             }
-            if ((sprite.y + sprite.image.getHeight()) > screenHeight) {
+            if ((sprite.y + sprite.image.getHeight()) > screenHeight)
+            {
                 sprite.y -= 30;
             }
             Rect current = new Rect(sprite.x, sprite.y,
                     sprite.x + sprite.image.getWidth(),
                     sprite.y + sprite.image.getHeight());
-            for (int subindex = 0, length2 = paintings.length; subindex < length2; subindex++) {
+            for (int subindex = 0, length2 = paintings.length; subindex < length2; subindex++)
+            {
                 Sprite subsprite = paintings[subindex];
                 Rect other = new Rect(subsprite.x, subsprite.y,
                         subsprite.x + subsprite.image.getWidth(),
                         subsprite.y + subsprite.image.getHeight());
 
                 //Collision player to painting
-                if (Rect.intersects(current, other)) {
+                if (Rect.intersects(current, other))
+                {
 
                     //score
                     Log.d(TAG, "Collision!");
@@ -294,7 +338,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
                     Log.d(TAG, String.valueOf(score));
 
                     //play sound
-                    sounds.play(sCatch,1.0f,1.0f,0,0,1.5f);
+                    sounds.play(sCatch, 1.0f, 1.0f, 0, 0, 1.5f);
 
                     //move painting to new location
                     Random randme = new Random();
@@ -311,11 +355,14 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
                     //Test painting location to see if it overlaps.
                     int testflag = 0; //tell loop to end
                     int testindex = 0; //increments for each painting tested. end loop if testloc > # of paintings
-                    do {
-                        if (testindex == subindex){
+                    do
+                    {
+                        if (testindex == subindex)
+                        {
                             testindex++;
                         }
-                        if (testindex >= paintings.length){
+                        if (testindex >= paintings.length)
+                        {
                             testindex = 0;
                             testflag = 1;
                         }
@@ -326,7 +373,8 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
                                 subsprite.x + subsprite.image.getWidth(),
                                 subsprite.y + subsprite.image.getHeight());
 
-                        if (Rect.intersects(newrect, test)) {
+                        if (Rect.intersects(newrect, test))
+                        {
                             testindex = 0;
                             //move painting to new location
                             randme = new Random();
@@ -338,8 +386,8 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
                             newrect = new Rect(subsprite.x, subsprite.y,
                                     subsprite.x + subsprite.image.getWidth(),
                                     subsprite.y + subsprite.image.getHeight());
-                        }
-                        else{
+                        } else
+                        {
                             testindex++;
                         }
                     } while (testflag != 1);
@@ -370,11 +418,14 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
 
     }
 
-    protected void render(Canvas canvas) {
+    protected void render(Canvas canvas)
+    {
         canvas.drawColor(Color.WHITE);
-        for (int index = 0, length = sprites.length; index < length; index++) {
+        for (int index = 0, length = sprites.length; index < length; index++)
+        {
             Paint p = null;
-            if (sprites[index].color != 0) {
+            if (sprites[index].color != 0)
+            {
                 p = new Paint();
                 ColorFilter filter = new LightingColorFilter(sprites[index].color, 0);
                 p.setColorFilter(filter);
@@ -382,9 +433,11 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
 
             canvas.drawBitmap(sprites[index].image, sprites[index].x, sprites[index].y, p);
         }
-        for (int index = 0, length = paintings.length; index < length; index++) {
+        for (int index = 0, length = paintings.length; index < length; index++)
+        {
             Paint p = null;
-            if (paintings[index].color != 0) {
+            if (paintings[index].color != 0)
+            {
                 p = new Paint();
                 ColorFilter filter = new LightingColorFilter(paintings[index].color, 0);
                 p.setColorFilter(filter);
@@ -402,15 +455,18 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
 
         DecimalFormat twoDForm = new DecimalFormat("#.##");
         double counterdisplay = Double.parseDouble(twoDForm.format(counter / 100.0));
-        canvas.drawText("Time: " + counterdisplay,20,100,textPaint);
-        canvas.drawText("Score: " + score,400,100,textPaint);
+        canvas.drawText("Time: " + counterdisplay, 20, 100, textPaint);
+        canvas.drawText("Score: " + score, 400, 100, textPaint);
     }
 
     @Override
-    public void run() {
-        while(isRunning) {
+    public void run()
+    {
+        while (isRunning)
+        {
             // We need to make sure that the surface is ready
-            if (! holder.getSurface().isValid()) {
+            if (!holder.getSurface().isValid())
+            {
                 continue;
             }
             long started = System.currentTimeMillis();
@@ -419,21 +475,25 @@ public class GameSurfaceView extends SurfaceView implements Runnable,SensorEvent
             step();
             // draw
             Canvas canvas = holder.lockCanvas();
-            if (canvas != null) {
+            if (canvas != null)
+            {
                 render(canvas);
                 holder.unlockCanvasAndPost(canvas);
             }
 
             float deltaTime = (System.currentTimeMillis() - started);
             int sleepTime = (int) (FRAME_PERIOD - deltaTime);
-            if (sleepTime > 0) {
-                try {
+            if (sleepTime > 0)
+            {
+                try
+                {
                     gameThread.sleep(sleepTime);
-                }
-                catch (InterruptedException e) {
+                } catch (InterruptedException e)
+                {
                 }
             }
-            while (sleepTime < 0) {
+            while (sleepTime < 0)
+            {
                 step();
                 sleepTime += FRAME_PERIOD;
             }

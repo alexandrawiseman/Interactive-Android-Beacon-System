@@ -21,44 +21,50 @@ public class ListViewAdapter extends BaseAdapter
     TextView mProgress;
     TextView mLocation;
 
-    public ListViewAdapter(Activity activity,ArrayList<HashMap<String, String>> list){
+    public ListViewAdapter(Activity activity, ArrayList<HashMap<String, String>> list)
+    {
         super();
-        this.activity=activity;
-        this.list=list;
+        this.activity = activity;
+        this.list = list;
     }
 
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         // TODO Auto-generated method stub
         return list.size();
     }
 
     @Override
-    public Object getItem(int position) {
+    public Object getItem(int position)
+    {
         // TODO Auto-generated method stub
         return list.get(position);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(int position)
+    {
         // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         // TODO Auto-generated method stub
-        LayoutInflater inflater=activity.getLayoutInflater();
+        LayoutInflater inflater = activity.getLayoutInflater();
 
-        if(convertView == null){
-            convertView=inflater.inflate(R.layout.row, null);
+        if (convertView == null)
+        {
+            convertView = inflater.inflate(R.layout.row, null);
         }
 
-        mName =(TextView) convertView.findViewById(R.id.name);
-        mProgress =(TextView) convertView.findViewById(R.id.progress);
-        mLocation =(TextView) convertView.findViewById(R.id.location);
+        mName = (TextView) convertView.findViewById(R.id.name);
+        mProgress = (TextView) convertView.findViewById(R.id.progress);
+        mLocation = (TextView) convertView.findViewById(R.id.location);
 
-        HashMap<String, String> map=list.get(position);
+        HashMap<String, String> map = list.get(position);
         mName.setText(map.get(Config.TAG_NAME));
         mProgress.setText(map.get(Config.TAG_SCORE));
         mLocation.setText(map.get(Config.TAG_LOC));

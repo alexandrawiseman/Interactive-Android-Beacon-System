@@ -59,60 +59,69 @@ public class TeacherActivity extends Activity implements SwipeRefreshLayout.OnRe
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh()
+    {
         getJSON();
     }
 
     private void showStudents()
     {
         JSONObject jsonObject = null;
-        ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
-        try {
+        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+        try
+        {
             jsonObject = new JSONObject(JSON_STRING);
             JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
 
-            for(int i = 0; i<result.length(); i++){
+            for (int i = 0; i < result.length(); i++)
+            {
                 JSONObject jo = result.getJSONObject(i);
                 String name = jo.getString(Config.TAG_NAME);
                 String location = jo.getString(Config.TAG_LOC);
                 String score = jo.getString(Config.TAG_SCORE);
 
-                HashMap<String,String> students = new HashMap<>();
-                students.put(Config.TAG_NAME,name);
-                students.put(Config.TAG_LOC,location);
-                students.put(Config.TAG_SCORE,score + "/3");
+                HashMap<String, String> students = new HashMap<>();
+                students.put(Config.TAG_NAME, name);
+                students.put(Config.TAG_LOC, location);
+                students.put(Config.TAG_SCORE, score + "/3");
                 list.add(students);
             }
 
-        } catch (JSONException e) {
+        } catch (JSONException e)
+        {
             e.printStackTrace();
         }
 
-        ListViewAdapter adapter=new ListViewAdapter(this, list);
+        ListViewAdapter adapter = new ListViewAdapter(this, list);
 
         mStudentListView.setAdapter(adapter);
     }
 
-    private void getJSON(){
+    private void getJSON()
+    {
         mSwipeRefreshLayout.setRefreshing(true);
-        class GetJSON extends AsyncTask<Void,Void,String>
+        class GetJSON extends AsyncTask<Void, Void, String>
         {
 
             ProgressDialog loading;
+
             @Override
-            protected void onPreExecute() {
+            protected void onPreExecute()
+            {
                 super.onPreExecute();
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            protected void onPostExecute(String s)
+            {
                 super.onPostExecute(s);
                 JSON_STRING = s;
                 showStudents();
             }
 
             @Override
-            protected String doInBackground(Void... params) {
+            protected String doInBackground(Void... params)
+            {
                 RequestHandler rh = new RequestHandler();
                 String s = rh.sendGetRequest(Config.URL_GET_ALL);
                 return s;
