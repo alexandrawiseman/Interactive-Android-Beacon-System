@@ -82,22 +82,6 @@ public class MainMenu extends Activity
             {
                 Intent enternameIntent = new Intent(MainMenu.this, EnterNameActivity.class);
                 startActivity(enternameIntent);
-
-                //Bluetooth operated menu selects game to play
-                //Intent pickerIntent = new Intent(MainMenu.this, GamePickerActivity.class);
-                //startActivity(pickerIntent);
-
-                //game A
-                //Intent planetIntent = new Intent(MainMenu.this, PlanetActivity.class);
-                //startActivity(planetIntent);
-
-                //game B
-                //Intent cameraIntent = new Intent(MainMenu.this, CameraInstructionActivity.class);
-                //startActivity(cameraIntent);
-
-                //game C
-                //Intent paintingIntent = new Intent(MainMenu.this, CatchPaintingActivity.class);
-                //startActivity(paintingIntent);
             }
         });
 

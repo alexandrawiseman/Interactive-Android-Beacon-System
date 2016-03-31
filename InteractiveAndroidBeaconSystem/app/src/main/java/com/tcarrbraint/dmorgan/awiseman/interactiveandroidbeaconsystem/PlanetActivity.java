@@ -18,13 +18,13 @@ public class PlanetActivity extends Activity
 {
     private Button mButtons[] = new Button[8];
     private Button mSubmitButton, mClearButton;
-    private int planetNumber;
-    private List<Integer> planetList;
-    private HashMap hm;
-    private boolean[] complete = new boolean[3];
-    private int studentID;
-    private int scores;
-    private String location = "Planets";
+    private int mPlanetNumber;
+    private List<Integer> mPlanetList;
+    private HashMap mHm;
+    private boolean[] mComplete = new boolean[3];
+    private int mStudentID;
+    private int mScores;
+    private String mLocation = "Planets";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,11 +34,11 @@ public class PlanetActivity extends Activity
 
         if (getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
-            complete = getIntent().getBooleanArrayExtra("GamesComplete");
+            mComplete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
 
-        studentID = getIntent().getIntExtra("gamePickerID", 0);
-        scores = getIntent().getIntExtra("gamePickerScore", 0);
+        mStudentID = getIntent().getIntExtra("gamePickerID", 0);
+        mScores = getIntent().getIntExtra("gamePickerScore", 0);
 
         mButtons[0] = (Button) findViewById(R.id.b1);
         mButtons[1] = (Button) findViewById(R.id.b2);
@@ -51,40 +51,40 @@ public class PlanetActivity extends Activity
         mSubmitButton = (Button) findViewById(R.id.submitButton);
         mClearButton = (Button) findViewById(R.id.clearButton);
 
-        planetNumber = 1;
+        mPlanetNumber = 1;
 
-        hm = new HashMap();
-        hm.put(R.drawable.mercury, "1");
-        hm.put(R.drawable.venus, "2");
-        hm.put(R.drawable.earth, "3");
-        hm.put(R.drawable.mars, "4");
-        hm.put(R.drawable.jupiter, "5");
-        hm.put(R.drawable.saturn, "6");
-        hm.put(R.drawable.uranus, "7");
-        hm.put(R.drawable.neptune, "8");
+        mHm = new HashMap();
+        mHm.put(R.drawable.mercury, "1");
+        mHm.put(R.drawable.venus, "2");
+        mHm.put(R.drawable.earth, "3");
+        mHm.put(R.drawable.mars, "4");
+        mHm.put(R.drawable.jupiter, "5");
+        mHm.put(R.drawable.saturn, "6");
+        mHm.put(R.drawable.uranus, "7");
+        mHm.put(R.drawable.neptune, "8");
 
         // Initialize order of planets
-        planetList = Arrays.asList(R.drawable.mercury, R.drawable.venus, R.drawable.earth, R.drawable.mars, R.drawable.jupiter, R.drawable.saturn, R.drawable.uranus, R.drawable.neptune);
-        Collections.shuffle(planetList);
+        mPlanetList = Arrays.asList(R.drawable.mercury, R.drawable.venus, R.drawable.earth, R.drawable.mars, R.drawable.jupiter, R.drawable.saturn, R.drawable.uranus, R.drawable.neptune);
+        Collections.shuffle(mPlanetList);
 
-        mButtons[0].setBackground(getResources().getDrawable(planetList.get(0)));
-        mButtons[1].setBackground(getResources().getDrawable(planetList.get(1)));
-        mButtons[2].setBackground(getResources().getDrawable(planetList.get(2)));
-        mButtons[3].setBackground(getResources().getDrawable(planetList.get(3)));
-        mButtons[4].setBackground(getResources().getDrawable(planetList.get(4)));
-        mButtons[5].setBackground(getResources().getDrawable(planetList.get(5)));
-        mButtons[6].setBackground(getResources().getDrawable(planetList.get(6)));
-        mButtons[7].setBackground(getResources().getDrawable(planetList.get(7)));
+        mButtons[0].setBackground(getResources().getDrawable(mPlanetList.get(0)));
+        mButtons[1].setBackground(getResources().getDrawable(mPlanetList.get(1)));
+        mButtons[2].setBackground(getResources().getDrawable(mPlanetList.get(2)));
+        mButtons[3].setBackground(getResources().getDrawable(mPlanetList.get(3)));
+        mButtons[4].setBackground(getResources().getDrawable(mPlanetList.get(4)));
+        mButtons[5].setBackground(getResources().getDrawable(mPlanetList.get(5)));
+        mButtons[6].setBackground(getResources().getDrawable(mPlanetList.get(6)));
+        mButtons[7].setBackground(getResources().getDrawable(mPlanetList.get(7)));
 
         mButtons[0].setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9 && mButtons[0].getText().toString() == "")
+                if (mPlanetNumber < 9 && mButtons[0].getText().toString() == "")
                 {
-                    mButtons[0].setText(Integer.toString(planetNumber));
-                    planetNumber++;
+                    mButtons[0].setText(Integer.toString(mPlanetNumber));
+                    mPlanetNumber++;
                 }
             }
         });
@@ -94,10 +94,10 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9 && mButtons[1].getText().toString() == "")
+                if (mPlanetNumber < 9 && mButtons[1].getText().toString() == "")
                 {
-                    mButtons[1].setText(Integer.toString(planetNumber));
-                    planetNumber++;
+                    mButtons[1].setText(Integer.toString(mPlanetNumber));
+                    mPlanetNumber++;
                 }
             }
         });
@@ -107,10 +107,10 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9 && mButtons[2].getText().toString() == "")
+                if (mPlanetNumber < 9 && mButtons[2].getText().toString() == "")
                 {
-                    mButtons[2].setText(Integer.toString(planetNumber));
-                    planetNumber++;
+                    mButtons[2].setText(Integer.toString(mPlanetNumber));
+                    mPlanetNumber++;
                 }
             }
         });
@@ -120,10 +120,10 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9 && mButtons[3].getText().toString() == "")
+                if (mPlanetNumber < 9 && mButtons[3].getText().toString() == "")
                 {
-                    mButtons[3].setText(Integer.toString(planetNumber));
-                    planetNumber++;
+                    mButtons[3].setText(Integer.toString(mPlanetNumber));
+                    mPlanetNumber++;
                 }
             }
         });
@@ -133,10 +133,10 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9 && mButtons[4].getText().toString() == "")
+                if (mPlanetNumber < 9 && mButtons[4].getText().toString() == "")
                 {
-                    mButtons[4].setText(Integer.toString(planetNumber));
-                    planetNumber++;
+                    mButtons[4].setText(Integer.toString(mPlanetNumber));
+                    mPlanetNumber++;
                 }
             }
         });
@@ -146,10 +146,10 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9 && mButtons[5].getText().toString() == "")
+                if (mPlanetNumber < 9 && mButtons[5].getText().toString() == "")
                 {
-                    mButtons[5].setText(Integer.toString(planetNumber));
-                    planetNumber++;
+                    mButtons[5].setText(Integer.toString(mPlanetNumber));
+                    mPlanetNumber++;
                 }
             }
         });
@@ -159,10 +159,10 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9 && mButtons[6].getText().toString() == "")
+                if (mPlanetNumber < 9 && mButtons[6].getText().toString() == "")
                 {
-                    mButtons[6].setText(Integer.toString(planetNumber));
-                    planetNumber++;
+                    mButtons[6].setText(Integer.toString(mPlanetNumber));
+                    mPlanetNumber++;
                 }
             }
         });
@@ -172,10 +172,10 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (planetNumber < 9 && mButtons[7].getText().toString() == "")
+                if (mPlanetNumber < 9 && mButtons[7].getText().toString() == "")
                 {
-                    mButtons[7].setText(Integer.toString(planetNumber));
-                    planetNumber++;
+                    mButtons[7].setText(Integer.toString(mPlanetNumber));
+                    mPlanetNumber++;
                 }
             }
         });
@@ -185,7 +185,7 @@ public class PlanetActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                planetNumber = 1;
+                mPlanetNumber = 1;
                 mButtons[0].setText("");
                 mButtons[1].setText("");
                 mButtons[2].setText("");
@@ -205,11 +205,8 @@ public class PlanetActivity extends Activity
                 System.out.println(v.getBackground());
                 int score = getGrade();
                 System.out.println("GRADE = " + score + "/8");
-                scores = scores + 1;
+                mScores = mScores + 1;
                 updateStudent();
-                //Intent mainMenuIntent = new Intent(PlanetActivity.this, MainMenu.class);
-                //mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                //startActivity(mainMenuIntent);
             }
         });
 
@@ -221,7 +218,7 @@ public class PlanetActivity extends Activity
 
         for (int i = 0; i < 8; i++)
         {
-            if (hm.get(planetList.get(i)) == mButtons[i].getText())
+            if (mHm.get(mPlanetList.get(i)) == mButtons[i].getText())
             {
                 score++;
             }
@@ -252,10 +249,10 @@ public class PlanetActivity extends Activity
                 Toast.makeText(PlanetActivity.this, s, Toast.LENGTH_LONG).show();
                 Intent submitIntent = new Intent(PlanetActivity.this, GamePickerActivity.class);
                 submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                complete[0] = true;
-                submitIntent.putExtra("GamesComplete", complete);
-                submitIntent.putExtra("gamePickerID", studentID);
-                submitIntent.putExtra("gamePickerScore", scores);
+                mComplete[0] = true;
+                submitIntent.putExtra("GamesComplete", mComplete);
+                submitIntent.putExtra("gamePickerID", mStudentID);
+                submitIntent.putExtra("gamePickerScore", mScores);
                 startActivity(submitIntent);
             }
 
@@ -263,9 +260,9 @@ public class PlanetActivity extends Activity
             protected String doInBackground(Void... params)
             {
                 HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_EMP_ID, Integer.toString(studentID));
-                hashMap.put(Config.KEY_EMP_DESG, location);
-                hashMap.put(Config.KEY_EMP_SAL, Integer.toString(scores));
+                hashMap.put(Config.KEY_EMP_ID, Integer.toString(mStudentID));
+                hashMap.put(Config.KEY_EMP_DESG, mLocation);
+                hashMap.put(Config.KEY_EMP_SAL, Integer.toString(mScores));
 
                 RequestHandler rh = new RequestHandler();
 

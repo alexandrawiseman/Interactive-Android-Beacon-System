@@ -16,10 +16,10 @@ public class CatchPaintingActivity extends Activity
 {
 
     protected GameSurfaceView gameView;
-    private boolean[] complete = new boolean[3];
-    private int studentID;
-    private int score;
-    private String location = "Mona Lisa";
+    private boolean[] mComplete = new boolean[3];
+    private int mStudentID;
+    private int mScore;
+    private String mLocation = "Mona Lisa";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,12 +27,12 @@ public class CatchPaintingActivity extends Activity
 
         if (getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
-            complete = getIntent().getBooleanArrayExtra("GamesComplete");
+            mComplete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
 
-        studentID = getIntent().getIntExtra("gamePickerID", 0);
-        score = getIntent().getIntExtra("gamePickerScore", 0);
-        Log.d("GamePickerActivity", "Student ID: " + studentID);
+        mStudentID = getIntent().getIntExtra("gamePickerID", 0);
+        mScore = getIntent().getIntExtra("gamePickerScore", 0);
+        Log.d("GamePickerActivity", "Student ID: " + mStudentID);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
@@ -54,7 +54,7 @@ public class CatchPaintingActivity extends Activity
     {
         super.onPause();
         gameView.pause();
-        score = score + 1;
+        mScore = mScore + 1;
         updateStudent();
     }
 
@@ -84,10 +84,10 @@ public class CatchPaintingActivity extends Activity
                 Toast.makeText(CatchPaintingActivity.this, s, Toast.LENGTH_LONG).show();
                 Intent submitIntent = new Intent(CatchPaintingActivity.this, GamePickerActivity.class);
                 submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                complete[2] = true;
-                submitIntent.putExtra("GamesComplete", complete);
-                submitIntent.putExtra("gamePickerID", studentID);
-                submitIntent.putExtra("gamePickerScore", score);
+                mComplete[2] = true;
+                submitIntent.putExtra("GamesComplete", mComplete);
+                submitIntent.putExtra("gamePickerID", mStudentID);
+                submitIntent.putExtra("gamePickerScore", mScore);
                 startActivity(submitIntent);
             }
 
@@ -95,9 +95,9 @@ public class CatchPaintingActivity extends Activity
             protected String doInBackground(Void... params)
             {
                 HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_EMP_ID, Integer.toString(studentID));
-                hashMap.put(Config.KEY_EMP_DESG, location);
-                hashMap.put(Config.KEY_EMP_SAL, Integer.toString(score));
+                hashMap.put(Config.KEY_EMP_ID, Integer.toString(mStudentID));
+                hashMap.put(Config.KEY_EMP_DESG, mLocation);
+                hashMap.put(Config.KEY_EMP_SAL, Integer.toString(mScore));
 
                 RequestHandler rh = new RequestHandler();
 

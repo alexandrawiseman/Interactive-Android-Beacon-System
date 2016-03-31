@@ -23,12 +23,12 @@ public class CameraSubmitActivity extends Activity
     private ImageView mUserImage;
     private Button mSubmitButton;
     private Button mRedoButton;
-    private boolean[] complete = new boolean[3];
-    private int studentID;
-    private int score;
-    private String location = "Statue of Liberty";
-    private String imageEncoded;
-    private Bitmap b;
+    private boolean[] mComplete = new boolean[3];
+    private int mStudentID;
+    private int mScore;
+    private String mLocation = "Statue of Liberty";
+    private String mImageEncoded;
+    private Bitmap mB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -39,20 +39,20 @@ public class CameraSubmitActivity extends Activity
 
         if (getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
-            complete = getIntent().getBooleanArrayExtra("GamesComplete");
+            mComplete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
-        studentID = getIntent().getIntExtra("gamePickerID", 0);
-        score = getIntent().getIntExtra("gamePickerScore", 0);
-        Log.d("GamePickerActivity", "Student ID Camera: " + studentID);
+        mStudentID = getIntent().getIntExtra("gamePickerID", 0);
+        mScore = getIntent().getIntExtra("gamePickerScore", 0);
+        Log.d("GamePickerActivity", "Student ID Camera: " + mStudentID);
 
         mUserImage = (ImageView) findViewById(R.id.userImage);
         mSubmitButton = (Button) findViewById(R.id.submit_picture);
         mRedoButton = (Button) findViewById(R.id.redo_picture);
 
-        b = CommonResources.photo;
-        if (b != null)
+        mB = CommonResources.photo;
+        if (mB != null)
         {
-            mUserImage.setImageBitmap(b);
+            mUserImage.setImageBitmap(mB);
         }
 
         mSubmitButton.setOnClickListener(new View.OnClickListener()
@@ -60,7 +60,7 @@ public class CameraSubmitActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                imageEncoded = getStringImage(b);
+                mImageEncoded = getStringImage(mB);
                 addImage();
             }
         });
@@ -72,9 +72,9 @@ public class CameraSubmitActivity extends Activity
             {
                 Intent redoIntent = new Intent(CameraSubmitActivity.this, CameraActivity.class);
                 redoIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                redoIntent.putExtra("GamesComplete", complete);
-                redoIntent.putExtra("gamePickerID", studentID);
-                redoIntent.putExtra("gamePickerScore", score);
+                redoIntent.putExtra("GamesComplete", mComplete);
+                redoIntent.putExtra("gamePickerID", mStudentID);
+                redoIntent.putExtra("gamePickerScore", mScore);
                 startActivity(redoIntent);
             }
         });
@@ -111,9 +111,9 @@ public class CameraSubmitActivity extends Activity
                 Toast.makeText(CameraSubmitActivity.this, s, Toast.LENGTH_LONG).show();
                 Intent submitIntent = new Intent(CameraSubmitActivity.this, GamePickerActivity.class);
                 submitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                submitIntent.putExtra("GamesComplete", complete);
-                submitIntent.putExtra("gamePickerID", studentID);
-                submitIntent.putExtra("gamePickerScore", score);
+                submitIntent.putExtra("GamesComplete", mComplete);
+                submitIntent.putExtra("gamePickerID", mStudentID);
+                submitIntent.putExtra("gamePickerScore", mScore);
                 startActivity(submitIntent);
             }
 
@@ -121,9 +121,9 @@ public class CameraSubmitActivity extends Activity
             protected String doInBackground(Void... params)
             {
                 HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_EMP_ID, Integer.toString(studentID));
-                hashMap.put(Config.KEY_EMP_DESG, location);
-                hashMap.put(Config.KEY_EMP_SAL, Integer.toString(score));
+                hashMap.put(Config.KEY_EMP_ID, Integer.toString(mStudentID));
+                hashMap.put(Config.KEY_EMP_DESG, mLocation);
+                hashMap.put(Config.KEY_EMP_SAL, Integer.toString(mScore));
 
                 RequestHandler rh = new RequestHandler();
 
@@ -157,8 +157,8 @@ public class CameraSubmitActivity extends Activity
             {
                 super.onPostExecute(s);
                 loading.dismiss();
-                complete[1] = true;
-                score = score + 1;
+                mComplete[1] = true;
+                mScore = mScore + 1;
                 updateStudent();
             }
 
@@ -167,7 +167,7 @@ public class CameraSubmitActivity extends Activity
             {
                 HashMap<String, String> params = new HashMap<>();
                 params.put(Config.KEY_EMP_NAME, System.currentTimeMillis() + ".jpg");
-                params.put(Config.KEY_EMP_IMG, imageEncoded);
+                params.put(Config.KEY_EMP_IMG, mImageEncoded);
 
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(Config.URL_ADD_IMAGE, params);

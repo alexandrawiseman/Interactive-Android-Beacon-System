@@ -34,13 +34,13 @@ import java.util.Collection;
 public class FactPickerActivity extends Activity implements BeaconConsumer
 {
 
-    private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
-    private LinearLayout layoutbackground;
-    private Button playbutton;
-    private String savelast = "E";
+    private BeaconManager mBeaconManager = BeaconManager.getInstanceForApplication(this);
+    private LinearLayout mLayoutbackground;
+    private Button mPlaybutton;
+    private String mSavelast = "E";
     private String saveIdentity = "D";
-    private boolean[] complete = new boolean[3];
-
+    private boolean[] mComplete = new boolean[3];
+    private GoogleApiClient mClient;
 
     long startTime = 0;
     //runs without a timer by reposting this handler at the end of the runnable
@@ -50,95 +50,90 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
         @Override
         public void run()
         {
-            if (savelast != saveIdentity)
+            if (mSavelast != saveIdentity)
             {
-                if (complete[0] && complete[1] && complete[2])
+                if (mComplete[0] && mComplete[1] && mComplete[2])
                 {
                     logToDisplay("You made it to all of our exhibits. We hope you enjoyed the museum.");
-                    playbutton.setClickable(true);
-                    playbutton.getBackground().setColorFilter(null);
-                    layoutbackground.setBackgroundColor(Color.MAGENTA);
-                    playbutton.setVisibility(View.VISIBLE);
-                    playbutton.setText("Back to Main Menu");
-                } else if (savelast != saveIdentity)
+                    mPlaybutton.setClickable(true);
+                    mPlaybutton.getBackground().setColorFilter(null);
+                    mLayoutbackground.setBackgroundColor(Color.MAGENTA);
+                    mPlaybutton.setVisibility(View.VISIBLE);
+                    mPlaybutton.setText("Back to Main Menu");
+                } else if (mSavelast != saveIdentity)
                 {
                     switch (saveIdentity)
                     {
                         case "A":
                         {
-                            layoutbackground.setBackgroundColor(Color.BLUE);
-                            playbutton.setVisibility(View.VISIBLE);
-                            playbutton.setText(R.string.factplanettext);
-                            if (complete[0])
+                            mLayoutbackground.setBackgroundColor(Color.BLUE);
+                            mPlaybutton.setVisibility(View.VISIBLE);
+                            mPlaybutton.setText(R.string.factplanettext);
+                            if (mComplete[0])
                             {
                                 logToDisplay(getResources().getString(R.string.factpicker_galaxy_complete));
-                                playbutton.setClickable(false);
-                                playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
+                                mPlaybutton.setClickable(false);
+                                mPlaybutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
                             } else
                             {
                                 logToDisplay(getResources().getString(R.string.factpicker_galaxy));
-                                playbutton.setClickable(true);
-                                playbutton.getBackground().setColorFilter(null);
+                                mPlaybutton.setClickable(true);
+                                mPlaybutton.getBackground().setColorFilter(null);
                             }
                             break;
                         }
                         case "B":
                         {
-                            layoutbackground.setBackgroundColor(Color.RED);
-                            playbutton.setVisibility(View.VISIBLE);
-                            playbutton.setText(R.string.factstatuetext);
-                            if (complete[1])
+                            mLayoutbackground.setBackgroundColor(Color.RED);
+                            mPlaybutton.setVisibility(View.VISIBLE);
+                            mPlaybutton.setText(R.string.factstatuetext);
+                            if (mComplete[1])
                             {
                                 logToDisplay(getResources().getString(R.string.factpicker_statue_complete));
-                                playbutton.setClickable(false);
-                                playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
+                                mPlaybutton.setClickable(false);
+                                mPlaybutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
                             } else
                             {
                                 logToDisplay(getResources().getString(R.string.factpicker_statue));
-                                playbutton.setClickable(true);
-                                playbutton.getBackground().setColorFilter(null);
+                                mPlaybutton.setClickable(true);
+                                mPlaybutton.getBackground().setColorFilter(null);
                             }
                             break;
                         }
                         case "C":
                         {
-                            layoutbackground.setBackgroundResource(R.color.regionc_color);
-                            playbutton.setVisibility(View.VISIBLE);
-                            playbutton.setText(R.string.factpaintingstext);
-                            if (complete[2])
+                            mLayoutbackground.setBackgroundResource(R.color.regionc_color);
+                            mPlaybutton.setVisibility(View.VISIBLE);
+                            mPlaybutton.setText(R.string.factpaintingstext);
+                            if (mComplete[2])
                             {
                                 logToDisplay(getString(R.string.factpicker_monalisa_complete));
-                                playbutton.setClickable(false);
-                                playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
+                                mPlaybutton.setClickable(false);
+                                mPlaybutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
                             } else
                             {
                                 logToDisplay(getResources().getString(R.string.factpicker_monalisa));
-                                playbutton.setClickable(true);
-                                playbutton.getBackground().setColorFilter(null);
+                                mPlaybutton.setClickable(true);
+                                mPlaybutton.getBackground().setColorFilter(null);
                             }
                             break;
                         }
                         default:
                         {
                             logToDisplay(getResources().getString(R.string.factpicker_default));
-                            layoutbackground.setBackgroundResource(R.color.main_menu_background);
-                            playbutton.setVisibility(View.GONE);
+                            mLayoutbackground.setBackgroundResource(R.color.main_menu_background);
+                            mPlaybutton.setVisibility(View.GONE);
                             break;
                         }
 
                     }
-                    savelast = saveIdentity;
+                    mSavelast = saveIdentity;
                 }
             }
 
             timerHandler.postDelayed(this, 1000);
         }
     };
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState)
@@ -147,55 +142,55 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
         setContentView(R.layout.activity_fact_picker);
         if (getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
-            complete = getIntent().getBooleanArrayExtra("GamesComplete");
+            mComplete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
 
-        if (complete[0])
+        if (mComplete[0])
         {
             ImageButton buttona = (ImageButton) FactPickerActivity.this.findViewById(R.id.aButton);
             buttona.setImageResource(R.drawable.check_icon);
         }
-        if (complete[1])
+        if (mComplete[1])
         {
             ImageButton buttonb = (ImageButton) FactPickerActivity.this.findViewById(R.id.bButton);
             buttonb.setImageResource(R.drawable.check_icon);
         }
-        if (complete[2])
+        if (mComplete[2])
         {
             ImageButton buttonc = (ImageButton) FactPickerActivity.this.findViewById(R.id.cButton);
             buttonc.setImageResource(R.drawable.check_icon);
         }
 
-        layoutbackground = (LinearLayout) FactPickerActivity.this.findViewById(R.id.backlayout);
-        playbutton = (Button) FactPickerActivity.this.findViewById(R.id.playgame);
+        mLayoutbackground = (LinearLayout) FactPickerActivity.this.findViewById(R.id.backlayout);
+        mPlaybutton = (Button) FactPickerActivity.this.findViewById(R.id.playgame);
 
         Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10172"), Identifier.parse("1"), Identifier.parse("1"));
         Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("2"));
         Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10101"), Identifier.parse("1"), Identifier.parse("2"));
         try
         {
-            beaconManager.startMonitoringBeaconsInRegion(region1);
+            mBeaconManager.startMonitoringBeaconsInRegion(region1);
         } catch (RemoteException e)
         {
             e.printStackTrace();
         }
         try
         {
-            beaconManager.startMonitoringBeaconsInRegion(region2);
+            mBeaconManager.startMonitoringBeaconsInRegion(region2);
         } catch (RemoteException e)
         {
             e.printStackTrace();
         }
         try
         {
-            beaconManager.startMonitoringBeaconsInRegion(region3);
+            mBeaconManager.startMonitoringBeaconsInRegion(region3);
         } catch (RemoteException e)
         {
             e.printStackTrace();
         }
 
-        beaconManager = BeaconManager.getInstanceForApplication(this);
-        beaconManager
+        mBeaconManager = BeaconManager.getInstanceForApplication(this);
+        mBeaconManager
                 .getBeaconParsers()
                 .add(new BeaconParser()
                         .setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
@@ -205,18 +200,17 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
         RunningAverageRssiFilter.setSampleExpirationMilliseconds(2000);
 
         //set active scan time to 0.5sec players=20001
-        beaconManager.setForegroundScanPeriod(500l);
-        beaconManager.setForegroundBetweenScanPeriod(0l);
+        mBeaconManager.setForegroundScanPeriod(500l);
+        mBeaconManager.setForegroundBetweenScanPeriod(0l);
         try
         {
-            beaconManager.updateScanPeriods();
+            mBeaconManager.updateScanPeriods();
         } catch (RemoteException e)
         {
             e.printStackTrace();
         }
-        //beaconManager.setBackgroundScanPeriod(100);
-        //beaconManager.setBackgroundBetweenScanPeriod(100);
-        beaconManager.bind(this);
+
+        mBeaconManager.bind(this);
 
         timerHandler.postDelayed(timerRunnable, 1000);
         Button playbutton = (Button) findViewById(R.id.playgame);
@@ -225,7 +219,7 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
             @Override
             public void onClick(View v)
             {
-                if (complete[0] && complete[1] && complete[2])
+                if (mComplete[0] && mComplete[1] && mComplete[2])
                 {
                     Intent doneIntent = new Intent(FactPickerActivity.this, MainMenu.class);
                     startActivity(doneIntent);
@@ -237,7 +231,7 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
                         case "A":
                         {
                             Intent planetIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
-                            planetIntent.putExtra("GamesComplete", complete);
+                            planetIntent.putExtra("GamesComplete", mComplete);
                             planetIntent.putExtra("beacon", saveIdentity);
                             startActivity(planetIntent);
                             break;
@@ -245,7 +239,7 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
                         case "B":
                         {
                             Intent cameraIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
-                            cameraIntent.putExtra("GamesComplete", complete);
+                            cameraIntent.putExtra("GamesComplete", mComplete);
                             cameraIntent.putExtra("beacon", saveIdentity);
                             startActivity(cameraIntent);
                             break;
@@ -253,7 +247,7 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
                         case "C":
                         {
                             Intent paintingIntent = new Intent(FactPickerActivity.this, AdultModeActivity.class);
-                            paintingIntent.putExtra("GamesComplete", complete);
+                            paintingIntent.putExtra("GamesComplete", mComplete);
                             paintingIntent.putExtra("beacon", saveIdentity);
                             startActivity(paintingIntent);
 
@@ -264,9 +258,8 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
                 }
             }
         });
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        mClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -274,7 +267,6 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
     {
         super.onSaveInstanceState(savedInstanceState);
         // Save the user's current game state
-
     }
 
 
@@ -289,14 +281,14 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
     protected void onDestroy()
     {
         super.onDestroy();
-        beaconManager.unbind(this);
+        mBeaconManager.unbind(this);
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
-        if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(true);
+        if (mBeaconManager.isBound(this)) mBeaconManager.setBackgroundMode(true);
         timerHandler.removeCallbacks(timerRunnable);
     }
 
@@ -304,36 +296,18 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
     protected void onResume()
     {
         super.onResume();
-        if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(false);
+        if (mBeaconManager.isBound(this)) mBeaconManager.setBackgroundMode(false);
         timerHandler.postDelayed(timerRunnable, 0);
     }
 
     @Override
     public void onBeaconServiceConnect()
     {
-        beaconManager.setRangeNotifier(new RangeNotifier()
+        mBeaconManager.setRangeNotifier(new RangeNotifier()
         {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region)
             {
-
-                ///ORIGINAL SAMPLE CODE
-                //for(int i = 0; i <= beacons.size(); i++){
-               /*
-               if (beacons.size() > 0) {
-                   EditText editText = (EditText) RangingActivity.this.findViewById(R.id.rangingText);
-                   Beacon firstBeacon = beacons.iterator().next();
-                   logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");
-              }*/
-
-
-               /*///MY DISTANCE CODE
-               int i = 1;
-               DecimalFormat df = new DecimalFormat("#.###");
-               for (Beacon beacon : beacons) {
-                   logToDisplay("beacon " + i + " about " + df.format(beacon.getDistance()) + " meters.");
-                   i++;
-               }*/
 
                 ///CLOSEST BEACON CODE
                 double min = 1000;
@@ -349,44 +323,17 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
                     }
                 }
                 saveIdentity = identify(save);
-                //logToDisplay("Closest = " + saveIdentity + " at " + df.format(min) + " meters.");
-
-
-
-                /*///OUTPUT RSSI + TX Power
-               int rssi,tx;
-               String save = "";
-               for (Beacon beacon : beacons) {
-                   rssi = beacon.getRssi();
-                   tx = beacon.getTxPower();
-                   save = beacon.getId1().toString();
-                   logToDisplay("Beacon = " + identify(save) + ", RSSI = " + rssi + ", TX = " + tx);
-               }
-               */
             }
 
         });
 
         try
         {
-            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+            mBeaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (RemoteException e)
         {
         }
     }
-
-
-    //Dynamically Create Buttons
-    /*
-    private void makeGameButton(){
-        TableLayout table = (TableLayout) findViewById(R.id.tableforgamebutton);
-        TableRow tablerow = new TableRow(this);
-        table.addView(tablerow);
-        Button button = new Button(this);
-        tablerow.addView(button);
-
-    }
-*/
 
     private void logToDisplay(final String line)
     {
@@ -409,7 +356,7 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
                 return "A";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
-                return "B";
+                return "C";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10101":
                 return "C";
@@ -426,9 +373,7 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
     {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
+        mClient.connect();
         Action viewAction = Action.newAction(
                 Action.TYPE_VIEW, // TODO: choose an action type.
                 "GamePicker Page", // TODO: Define a title for the content shown.
@@ -439,7 +384,7 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
                 // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem/http/host/path")
         );
-        AppIndex.AppIndexApi.start(client, viewAction);
+        AppIndex.AppIndexApi.start(mClient, viewAction);
     }
 
     @Override
@@ -447,8 +392,6 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
     {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         Action viewAction = Action.newAction(
                 Action.TYPE_VIEW, // TODO: choose an action type.
                 "GamePicker Page", // TODO: Define a title for the content shown.
@@ -459,7 +402,7 @@ public class FactPickerActivity extends Activity implements BeaconConsumer
                 // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem/http/host/path")
         );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
+        AppIndex.AppIndexApi.end(mClient, viewAction);
+        mClient.disconnect();
     }
 }

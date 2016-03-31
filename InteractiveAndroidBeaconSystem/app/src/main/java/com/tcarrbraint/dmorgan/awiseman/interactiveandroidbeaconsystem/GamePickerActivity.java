@@ -35,14 +35,15 @@ import java.util.Collection;
 public class GamePickerActivity extends Activity implements BeaconConsumer
 {
 
-    private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
-    private LinearLayout layoutbackground;
-    private Button playbutton;
-    private String savelast = "E";
-    private String saveIdentity = "D";
-    private boolean[] complete = new boolean[3];
-    private int studentID;
-    private int score;
+    private BeaconManager mBeaconManager = BeaconManager.getInstanceForApplication(this);
+    private LinearLayout mLayoutbackground;
+    private Button mPlaybutton;
+    private String mSavelast = "E";
+    private String mSaveIdentity = "D";
+    private boolean[] mComplete = new boolean[3];
+    private int mStudentID;
+    private int mScore;
+    private GoogleApiClient mClient;
 
     long startTime = 0;
     //runs without a timer by reposting this handler at the end of the runnable
@@ -53,92 +54,87 @@ public class GamePickerActivity extends Activity implements BeaconConsumer
         public void run()
         {
 
-            if (complete[0] && complete[1] && complete[2])
+            if (mComplete[0] && mComplete[1] && mComplete[2])
             {
                 logToDisplay("Wow you beat the game at every exhibit, you're done! Time to return to your teacher.");
-                playbutton.setClickable(true);
-                playbutton.getBackground().setColorFilter(null);
-                layoutbackground.setBackgroundColor(Color.MAGENTA);
-                playbutton.setVisibility(View.VISIBLE);
-                playbutton.setText("Back to Main Menu");
-            } else if (savelast != saveIdentity)
+                mPlaybutton.setClickable(true);
+                mPlaybutton.getBackground().setColorFilter(null);
+                mLayoutbackground.setBackgroundColor(Color.MAGENTA);
+                mPlaybutton.setVisibility(View.VISIBLE);
+                mPlaybutton.setText("Back to Main Menu");
+            } else if (mSavelast != mSaveIdentity)
             {
-                switch (saveIdentity)
+                switch (mSaveIdentity)
                 {
                     case "A":
                     {
-                        layoutbackground.setBackgroundColor(Color.BLUE);
-                        playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText(R.string.planetbuttontext);
-                        if (complete[0])
+                        mLayoutbackground.setBackgroundColor(Color.BLUE);
+                        mPlaybutton.setVisibility(View.VISIBLE);
+                        mPlaybutton.setText(R.string.planetbuttontext);
+                        if (mComplete[0])
                         {
                             logToDisplay(getString(R.string.gamepicker_galaxy_complete));
-                            playbutton.setClickable(false);
-                            playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
+                            mPlaybutton.setClickable(false);
+                            mPlaybutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
                         } else
                         {
                             logToDisplay(getString(R.string.gamepicker_galaxy));
-                            playbutton.setClickable(true);
-                            playbutton.getBackground().setColorFilter(null);
+                            mPlaybutton.setClickable(true);
+                            mPlaybutton.getBackground().setColorFilter(null);
                         }
                         break;
                     }
                     case "B":
                     {
-                        layoutbackground.setBackgroundColor(Color.RED);
-                        playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText(R.string.statuebuttontext);
-                        if (complete[1])
+                        mLayoutbackground.setBackgroundColor(Color.RED);
+                        mPlaybutton.setVisibility(View.VISIBLE);
+                        mPlaybutton.setText(R.string.statuebuttontext);
+                        if (mComplete[1])
                         {
                             logToDisplay(getString(R.string.gamepicker_statue_complete));
-                            playbutton.setClickable(false);
-                            playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
+                            mPlaybutton.setClickable(false);
+                            mPlaybutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
                         } else
                         {
                             logToDisplay(getString(R.string.gamepicker_statue));
-                            playbutton.setClickable(true);
-                            playbutton.getBackground().setColorFilter(null);
+                            mPlaybutton.setClickable(true);
+                            mPlaybutton.getBackground().setColorFilter(null);
                         }
                         break;
                     }
                     case "C":
                     {
-                        layoutbackground.setBackgroundResource(R.color.regionc_color);
-                        playbutton.setVisibility(View.VISIBLE);
-                        playbutton.setText(R.string.paintingbuttontext);
-                        if (complete[2])
+                        mLayoutbackground.setBackgroundResource(R.color.regionc_color);
+                        mPlaybutton.setVisibility(View.VISIBLE);
+                        mPlaybutton.setText(R.string.paintingbuttontext);
+                        if (mComplete[2])
                         {
                             logToDisplay(getString(R.string.gamepicker_monalisa_complete));
-                            playbutton.setClickable(false);
-                            playbutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
+                            mPlaybutton.setClickable(false);
+                            mPlaybutton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.DARKEN);
                         } else
                         {
                             logToDisplay(getString(R.string.gamepicker_monalisa));
-                            playbutton.setClickable(true);
-                            playbutton.getBackground().setColorFilter(null);
+                            mPlaybutton.setClickable(true);
+                            mPlaybutton.getBackground().setColorFilter(null);
                         }
                         break;
                     }
                     default:
                     {
                         logToDisplay(getString(R.string.gamepicker_default));
-                        layoutbackground.setBackgroundResource(R.color.main_menu_background);
-                        playbutton.setVisibility(View.GONE);
+                        mLayoutbackground.setBackgroundResource(R.color.main_menu_background);
+                        mPlaybutton.setVisibility(View.GONE);
                         break;
                     }
 
                 }
-                savelast = saveIdentity;
+                mSavelast = mSaveIdentity;
             }
 
             timerHandler.postDelayed(this, 1000);
         }
     };
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState)
@@ -146,64 +142,62 @@ public class GamePickerActivity extends Activity implements BeaconConsumer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_picker);
 
-        studentID = getIntent().getIntExtra("gamePickerID", 0);
-        score = getIntent().getIntExtra("gamePickerScore", 0);
-        Log.d("GamePickerActivity", "Student ID: " + studentID);
+        mStudentID = getIntent().getIntExtra("gamePickerID", 0);
+        mScore = getIntent().getIntExtra("gamePickerScore", 0);
+        Log.d("GamePickerActivity", "Student ID: " + mStudentID);
 
         if (getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
-            complete = getIntent().getBooleanArrayExtra("GamesComplete");
+            mComplete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
 
-        if (complete[0])
+        if (mComplete[0])
         {
             ImageButton buttona = (ImageButton) GamePickerActivity.this.findViewById(R.id.aButton);
             buttona.setImageResource(R.drawable.check_icon);
         }
-        if (complete[1])
+        if (mComplete[1])
         {
             ImageButton buttonb = (ImageButton) GamePickerActivity.this.findViewById(R.id.bButton);
             buttonb.setImageResource(R.drawable.check_icon);
         }
-        if (complete[2])
+        if (mComplete[2])
         {
             ImageButton buttonc = (ImageButton) GamePickerActivity.this.findViewById(R.id.cButton);
             buttonc.setImageResource(R.drawable.check_icon);
         }
 
-        layoutbackground = (LinearLayout) GamePickerActivity.this.findViewById(R.id.backlayout);
-        playbutton = (Button) GamePickerActivity.this.findViewById(R.id.playgame);
+        mLayoutbackground = (LinearLayout) GamePickerActivity.this.findViewById(R.id.backlayout);
+        mPlaybutton = (Button) GamePickerActivity.this.findViewById(R.id.playgame);
 
         Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10172"), Identifier.parse("1"), Identifier.parse("1"));
-        //Region region1 = new Region("bb1", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("1"));
         Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("2"));
-        //Region region2 = new Region("bb2", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("2"));
         Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10101"), Identifier.parse("1"), Identifier.parse("2"));
-        //Region region3 = new Region("bb3", Identifier.parse("A7AE2EB7-1F00-4168-B99B-A749BAC10007"), Identifier.parse("1"), Identifier.parse("2"));
+
         try
         {
-            beaconManager.startMonitoringBeaconsInRegion(region1);
+            mBeaconManager.startMonitoringBeaconsInRegion(region1);
         } catch (RemoteException e)
         {
             e.printStackTrace();
         }
         try
         {
-            beaconManager.startMonitoringBeaconsInRegion(region2);
+            mBeaconManager.startMonitoringBeaconsInRegion(region2);
         } catch (RemoteException e)
         {
             e.printStackTrace();
         }
         try
         {
-            beaconManager.startMonitoringBeaconsInRegion(region3);
+            mBeaconManager.startMonitoringBeaconsInRegion(region3);
         } catch (RemoteException e)
         {
             e.printStackTrace();
         }
 
-        beaconManager = BeaconManager.getInstanceForApplication(this);
-        beaconManager
+        mBeaconManager = BeaconManager.getInstanceForApplication(this);
+        mBeaconManager
                 .getBeaconParsers()
                 .add(new BeaconParser()
                         .setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
@@ -213,18 +207,17 @@ public class GamePickerActivity extends Activity implements BeaconConsumer
         RunningAverageRssiFilter.setSampleExpirationMilliseconds(2000);
 
         //set active scan time to 0.5sec //players=20001
-        beaconManager.setForegroundScanPeriod(500l);
-        beaconManager.setForegroundBetweenScanPeriod(0l);
+        mBeaconManager.setForegroundScanPeriod(500l);
+        mBeaconManager.setForegroundBetweenScanPeriod(0l);
         try
         {
-            beaconManager.updateScanPeriods();
+            mBeaconManager.updateScanPeriods();
         } catch (RemoteException e)
         {
             e.printStackTrace();
         }
-        //beaconManager.setBackgroundScanPeriod(100);
-        //beaconManager.setBackgroundBetweenScanPeriod(100);
-        beaconManager.bind(this);
+
+        mBeaconManager.bind(this);
 
         timerHandler.postDelayed(timerRunnable, 1000);
         Button playbutton = (Button) findViewById(R.id.playgame);
@@ -233,38 +226,38 @@ public class GamePickerActivity extends Activity implements BeaconConsumer
             @Override
             public void onClick(View v)
             {
-                if (complete[0] && complete[1] && complete[2])
+                if (mComplete[0] && mComplete[1] && mComplete[2])
                 {
                     Intent doneIntent = new Intent(GamePickerActivity.this, MainMenu.class);
                     startActivity(doneIntent);
                 } else
                 {
-                    switch (saveIdentity)
+                    switch (mSaveIdentity)
                     {
                         case "A":
                         {
                             Intent planetIntent = new Intent(GamePickerActivity.this, PlanetActivity.class);
-                            planetIntent.putExtra("GamesComplete", complete);
-                            planetIntent.putExtra("gamePickerID", studentID);
-                            planetIntent.putExtra("gamePickerScore", score);
+                            planetIntent.putExtra("GamesComplete", mComplete);
+                            planetIntent.putExtra("gamePickerID", mStudentID);
+                            planetIntent.putExtra("gamePickerScore", mScore);
                             startActivity(planetIntent);
                             break;
                         }
                         case "B":
                         {
                             Intent cameraIntent = new Intent(GamePickerActivity.this, CameraInstructionActivity.class);
-                            cameraIntent.putExtra("GamesComplete", complete);
-                            cameraIntent.putExtra("gamePickerID", studentID);
-                            cameraIntent.putExtra("gamePickerScore", score);
+                            cameraIntent.putExtra("GamesComplete", mComplete);
+                            cameraIntent.putExtra("gamePickerID", mStudentID);
+                            cameraIntent.putExtra("gamePickerScore", mScore);
                             startActivity(cameraIntent);
                             break;
                         }
                         case "C":
                         {
                             Intent paintingIntent = new Intent(GamePickerActivity.this, CatchPaintingActivity.class);
-                            paintingIntent.putExtra("GamesComplete", complete);
-                            paintingIntent.putExtra("gamePickerID", studentID);
-                            paintingIntent.putExtra("gamePickerScore", score);
+                            paintingIntent.putExtra("GamesComplete", mComplete);
+                            paintingIntent.putExtra("gamePickerID", mStudentID);
+                            paintingIntent.putExtra("gamePickerScore", mScore);
                             startActivity(paintingIntent);
                             break;
                         }
@@ -273,9 +266,8 @@ public class GamePickerActivity extends Activity implements BeaconConsumer
                 }
             }
         });
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        mClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -297,14 +289,14 @@ public class GamePickerActivity extends Activity implements BeaconConsumer
     protected void onDestroy()
     {
         super.onDestroy();
-        beaconManager.unbind(this);
+        mBeaconManager.unbind(this);
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
-        if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(true);
+        if (mBeaconManager.isBound(this)) mBeaconManager.setBackgroundMode(true);
         timerHandler.removeCallbacks(timerRunnable);
     }
 
@@ -312,36 +304,18 @@ public class GamePickerActivity extends Activity implements BeaconConsumer
     protected void onResume()
     {
         super.onResume();
-        if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(false);
+        if (mBeaconManager.isBound(this)) mBeaconManager.setBackgroundMode(false);
         timerHandler.postDelayed(timerRunnable, 0);
     }
 
     @Override
     public void onBeaconServiceConnect()
     {
-        beaconManager.setRangeNotifier(new RangeNotifier()
+        mBeaconManager.setRangeNotifier(new RangeNotifier()
         {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region)
             {
-
-                ///ORIGINAL SAMPLE CODE
-                //for(int i = 0; i <= beacons.size(); i++){
-               /*
-               if (beacons.size() > 0) {
-                   EditText editText = (EditText) RangingActivity.this.findViewById(R.id.rangingText);
-                   Beacon firstBeacon = beacons.iterator().next();
-                   logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");
-              }*/
-
-
-               /*///MY DISTANCE CODE
-               int i = 1;
-               DecimalFormat df = new DecimalFormat("#.###");
-               for (Beacon beacon : beacons) {
-                   logToDisplay("beacon " + i + " about " + df.format(beacon.getDistance()) + " meters.");
-                   i++;
-               }*/
 
                 ///CLOSEST BEACON CODE
                 double min = 1000;
@@ -356,45 +330,18 @@ public class GamePickerActivity extends Activity implements BeaconConsumer
                         save = beacon.getId1().toString();
                     }
                 }
-                saveIdentity = identify(save);
-                //logToDisplay("Closest = " + saveIdentity + " at " + df.format(min) + " meters.");
-
-
-
-                /*///OUTPUT RSSI + TX Power
-               int rssi,tx;
-               String save = "";
-               for (Beacon beacon : beacons) {
-                   rssi = beacon.getRssi();
-                   tx = beacon.getTxPower();
-                   save = beacon.getId1().toString();
-                   logToDisplay("Beacon = " + identify(save) + ", RSSI = " + rssi + ", TX = " + tx);
-               }
-               */
+                mSaveIdentity = identify(save);
             }
 
         });
 
         try
         {
-            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+            mBeaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (RemoteException e)
         {
         }
     }
-
-
-    //Dynamically Create Buttons
-    /*
-    private void makeGameButton(){
-        TableLayout table = (TableLayout) findViewById(R.id.tableforgamebutton);
-        TableRow tablerow = new TableRow(this);
-        table.addView(tablerow);
-        Button button = new Button(this);
-        tablerow.addView(button);
-
-    }
-*/
 
     private void logToDisplay(final String line)
     {
@@ -414,15 +361,12 @@ public class GamePickerActivity extends Activity implements BeaconConsumer
         switch (uid)
         {
             case "a7ae2eb7-1f00-4168-b99b-a749bac10172":
-                //case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
                 return "A";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
-                //case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
-                return "B";
+                return "C";
 
             case "a7ae2eb7-1f00-4168-b99b-a749bac10101":
-                //case "a7ae2eb7-1f00-4168-b99b-a749bac10007":
                 return "C";
 
             default:
@@ -437,20 +381,14 @@ public class GamePickerActivity extends Activity implements BeaconConsumer
     {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
+        mClient.connect();
         Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "GamePicker Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
+                Action.TYPE_VIEW,
+                "GamePicker Page",
                 Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem/http/host/path")
         );
-        AppIndex.AppIndexApi.start(client, viewAction);
+        AppIndex.AppIndexApi.start(mClient, viewAction);
     }
 
     @Override
@@ -458,19 +396,13 @@ public class GamePickerActivity extends Activity implements BeaconConsumer
     {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "GamePicker Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
+                Action.TYPE_VIEW,
+                "GamePicker Page",
                 Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.tcarrbraint.dmorgan.awiseman.interactiveandroidbeaconsystem/http/host/path")
         );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
+        AppIndex.AppIndexApi.end(mClient, viewAction);
+        mClient.disconnect();
     }
 }

@@ -10,9 +10,9 @@ public class CameraInstructionActivity extends Activity
 {
 
     private Button mBeginButton;
-    private int studentID;
-    private int score;
-    private boolean[] complete = new boolean[3];
+    private int mStudentID;
+    private int mScore;
+    private boolean[] mComplete = new boolean[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,11 +20,11 @@ public class CameraInstructionActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_instruction);
 
-        studentID = getIntent().getIntExtra("gamePickerID", 0);
-        score = getIntent().getIntExtra("gamePickerScore", 0);
+        mStudentID = getIntent().getIntExtra("gamePickerID", 0);
+        mScore = getIntent().getIntExtra("gamePickerScore", 0);
         if (getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
-            complete = getIntent().getBooleanArrayExtra("GamesComplete");
+            mComplete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
 
         mBeginButton = (Button) findViewById(R.id.begin_button);
@@ -35,9 +35,9 @@ public class CameraInstructionActivity extends Activity
             {
                 Intent cameraIntent = new Intent(CameraInstructionActivity.this, CameraActivity.class);
                 cameraIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                cameraIntent.putExtra("GamesComplete", complete);
-                cameraIntent.putExtra("gamePickerID", studentID);
-                cameraIntent.putExtra("gamePickerScore", score);
+                cameraIntent.putExtra("GamesComplete", mComplete);
+                cameraIntent.putExtra("gamePickerID", mStudentID);
+                cameraIntent.putExtra("gamePickerScore", mScore);
                 startActivity(cameraIntent);
             }
         });

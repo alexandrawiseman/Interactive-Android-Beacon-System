@@ -21,7 +21,7 @@ public class EnterNameActivity extends Activity
 
     private EditText mNameEditText;
     private Button mSubmitName;
-    private int studentID = 0;
+    private int mStudentID = 0;
     private String JSON_STRING = "";
 
     @Override
@@ -108,15 +108,15 @@ public class EnterNameActivity extends Activity
             JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
             JSONObject jo = result.getJSONObject(0);
             String id = jo.getString(Config.TAG_ID);
-            studentID = Integer.parseInt(id.trim());
+            mStudentID = Integer.parseInt(id.trim());
         } catch (JSONException e)
         {
             e.printStackTrace();
         }
 
         Intent pickerIntent = new Intent(EnterNameActivity.this, GamePickerActivity.class);
-        Log.d("EnterNameActivity", "Student ID: " + studentID);
-        pickerIntent.putExtra("gamePickerID", studentID);
+        Log.d("EnterNameActivity", "Student ID: " + mStudentID);
+        pickerIntent.putExtra("gamePickerID", mStudentID);
         startActivity(pickerIntent);
     }
 

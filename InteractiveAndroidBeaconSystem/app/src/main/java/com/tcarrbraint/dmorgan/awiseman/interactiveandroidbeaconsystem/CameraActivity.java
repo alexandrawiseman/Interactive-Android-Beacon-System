@@ -35,9 +35,9 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback
     SurfaceHolder surfaceHolder;
     boolean previewing = false;
     LayoutInflater controlInflater = null;
-    private int studentID;
-    private int score;
-    private boolean[] complete = new boolean[3];
+    private int mStudentID;
+    private int mScore;
+    private boolean[] mComplete = new boolean[3];
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -47,10 +47,10 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         if (getIntent().getBooleanArrayExtra("GamesComplete") != null)
         {
-            complete = getIntent().getBooleanArrayExtra("GamesComplete");
+            mComplete = getIntent().getBooleanArrayExtra("GamesComplete");
         }
-        studentID = getIntent().getIntExtra("gamePickerID", 0);
-        score = getIntent().getIntExtra("gamePickerScore", 0);
+        mStudentID = getIntent().getIntExtra("gamePickerID", 0);
+        mScore = getIntent().getIntExtra("gamePickerScore", 0);
 
         getWindow().setFormat(PixelFormat.UNKNOWN);
         surfaceView = (SurfaceView) findViewById(R.id.camerapreview);
@@ -127,16 +127,15 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback
             CommonResources.photo = flip;
             Intent cameraIntent = new Intent(CameraActivity.this, CameraSubmitActivity.class);
             cameraIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            cameraIntent.putExtra("GamesComplete", complete);
-            cameraIntent.putExtra("gamePickerID", studentID);
-            cameraIntent.putExtra("gamePickerScore", score);
+            cameraIntent.putExtra("GamesComplete", mComplete);
+            cameraIntent.putExtra("gamePickerID", mStudentID);
+            cameraIntent.putExtra("gamePickerScore", mScore);
             startActivity(cameraIntent);
         }
     };
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width,
-                               int height)
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
     {
         if (previewing)
         {

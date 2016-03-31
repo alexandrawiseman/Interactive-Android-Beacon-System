@@ -29,48 +29,44 @@ import java.util.Random;
 
 public class GameSurfaceView extends SurfaceView implements Runnable, SensorEventListener
 {
-
     private static final String TAG = "ME";
-    private TextView scoretext;
+    private static final int MAX_FPS = 40; //desired fps
+    private static final int FRAME_PERIOD = 1000 / MAX_FPS; // the frame period
+    private static final int WIDTH = 150;
+    private static final int HEIGHT = 150;
 
-    private boolean isRunning = false;
-    private Thread gameThread;
-    private SurfaceHolder holder;
+    private TextView mScoretext;
+    private boolean mIsRunning = false;
+    private Thread mGameThread;
+    private SurfaceHolder mHolder;
+    private int mScreenWidth;
+    private int mScreenHeight;
+    private Sprite[] mSprites;
+    private Painting[] mPaintings;
+    private Sensor mAccelerometer;
+    private SoundPool mSounds;
+    private int mSCatch;
+    private Context mContext;
+
     public SensorManager sensorManager = null;
-    private int screenWidth;
-    private int screenHeight;
-
-
-    private Sprite[] sprites;
-    private Painting[] paintings;
-
-    private final static int MAX_FPS = 40; //desired fps
-    private final static int FRAME_PERIOD = 1000 / MAX_FPS; // the frame period
-
-    ShapeDrawable mDrawable = new ShapeDrawable();
-    private Sensor Accelerometer;
     public static int x1;
     public static int y1;
     public static int z1;
     public int score = 0;
-    private SoundPool sounds;
-    private int sCatch;
-    private static final int width = 150;
-    private static final int height = 150;
 
-    private Context mContext;
+    ShapeDrawable mDrawable = new ShapeDrawable();
 
     public GameSurfaceView(Context context)
     {
         super(context);
         mContext = context;
-        scoretext = (TextView) findViewById(R.id.score);
+        mScoretext = (TextView) findViewById(R.id.score);
 
         Log.d(TAG, "GameSurfaceView Open");
 
         sensorManager = (SensorManager) this.getContext().getSystemService(Context.SENSOR_SERVICE);
-        holder = getHolder();
-        holder.addCallback(new SurfaceHolder.Callback()
+        mHolder = getHolder();
+        mHolder.addCallback(new SurfaceHolder.Callback()
         {
             @Override
             public void surfaceCreated(SurfaceHolder holder)
@@ -80,8 +76,8 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
             {
-                screenWidth = width;
-                screenHeight = height;
+                mScreenWidth = width;
+                mScreenHeight = height;
             }
 
             @Override
@@ -91,16 +87,14 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
             }
         });
 
+        mSounds = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        mSCatch = mSounds.load(context, R.raw.catchpainting, 1);
 
-        //declare variables
-        sounds = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
-        sCatch = sounds.load(context, R.raw.catchpainting, 1);
-
-
-        sprites = new Sprite[]{
+        mSprites = new Sprite[]{
                 new Sprite(100, 100, BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher)),
         };
-        paintings = new Painting[]{
+
+        mPaintings = new Painting[]{
                 new Painting(300, 300, paintingpicker()),
                 new Painting(400, 600, paintingpicker()),
                 new Painting(100, 600, paintingpicker()),
@@ -138,7 +132,6 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
     {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
         {
-            // the values you were calculating originally here were over 10000!
             x1 = (int) sensorEvent.values[1];
             y1 = (int) sensorEvent.values[2]; // tilt forward = negative
             z1 = (int) sensorEvent.values[0]; // tilt right = negative
@@ -160,9 +153,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
 
     public void resume()
     {
-        isRunning = true;
-        gameThread = new Thread(this);
-        gameThread.start();
+        mIsRunning = true;
+        mGameThread = new Thread(this);
+        mGameThread.start();
         // Register this class as a listener for the accelerometer sensor
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
@@ -173,17 +166,16 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
 
     public void pause()
     {
-        isRunning = false;
+        mIsRunning = false;
         boolean retry = true;
         while (retry)
         {
             try
             {
-                gameThread.join();
+                mGameThread.join();
                 retry = false;
             } catch (InterruptedException e)
             {
-                // try again shutting down the thread
             }
         }
     }
@@ -241,16 +233,16 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
     protected void step()
     {
 
-        //manage time and add paintings
+        //manage time and add mPaintings
         counter--;
         if ((counter == 700) || (counter == 400))
         {
-            paintings = addElement(paintings, new Painting(300, 300, paintingpicker()));
+            mPaintings = addElement(mPaintings, new Painting(300, 300, paintingpicker()));
         }
         if (counter <= 0)
         {
             //END GAME
-            synchronized (holder)
+            synchronized (mHolder)
             {
                 //quit to mainmenu
                 ((Activity) mContext).finish();
@@ -258,14 +250,14 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
         }
 
         //Move the Paintings
-        for (int index = 0, length = paintings.length; index < length; index++)
+        for (int index = 0, length = mPaintings.length; index < length; index++)
         {
-            Painting painting = paintings[index];
-            if ((painting.x < 0) || ((painting.x + painting.image.getWidth()) > screenWidth))
+            Painting painting = mPaintings[index];
+            if ((painting.x < 0) || ((painting.x + painting.image.getWidth()) > mScreenWidth))
             {
                 painting.directionX *= -1;
             }
-            if ((painting.y < 0) || ((painting.y + painting.image.getHeight()) > screenHeight))
+            if ((painting.y < 0) || ((painting.y + painting.image.getHeight()) > mScreenHeight))
             {
                 painting.directionY *= -1;
             }
@@ -277,7 +269,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
             {
                 if (subindex != index)
                 {
-                    Painting subpainting = paintings[subindex];
+                    Painting subpainting = mPaintings[subindex];
                     Rect other = new Rect(subpainting.x, subpainting.y,
                             subpainting.x + subpainting.image.getWidth(),
                             subpainting.y + subpainting.image.getHeight());
@@ -297,33 +289,31 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
         }
 
         //Move the Character
-        for (int index = 0; index <= sprites.length - 1; index++)
+        for (int index = 0; index <= mSprites.length - 1; index++)
         {
-            Sprite sprite = sprites[index];
+            Sprite sprite = mSprites[index];
             if ((sprite.x < 0))
             {
-                //sprite.directionX *= -1;
                 sprite.x += 30;
             }
-            if ((sprite.x + sprite.image.getWidth()) > screenWidth)
+            if ((sprite.x + sprite.image.getWidth()) > mScreenWidth)
             {
                 sprite.x -= 30;
             }
             if ((sprite.y < 0))
             {
-                //sprite.directionY *= -1;
                 sprite.y += 30;
             }
-            if ((sprite.y + sprite.image.getHeight()) > screenHeight)
+            if ((sprite.y + sprite.image.getHeight()) > mScreenHeight)
             {
                 sprite.y -= 30;
             }
             Rect current = new Rect(sprite.x, sprite.y,
                     sprite.x + sprite.image.getWidth(),
                     sprite.y + sprite.image.getHeight());
-            for (int subindex = 0, length2 = paintings.length; subindex < length2; subindex++)
+            for (int subindex = 0, length2 = mPaintings.length; subindex < length2; subindex++)
             {
-                Sprite subsprite = paintings[subindex];
+                Sprite subsprite = mPaintings[subindex];
                 Rect other = new Rect(subsprite.x, subsprite.y,
                         subsprite.x + subsprite.image.getWidth(),
                         subsprite.y + subsprite.image.getHeight());
@@ -338,37 +328,37 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
                     Log.d(TAG, String.valueOf(score));
 
                     //play sound
-                    sounds.play(sCatch, 1.0f, 1.0f, 0, 0, 1.5f);
+                    mSounds.play(mSCatch, 1.0f, 1.0f, 0, 0, 1.5f);
 
                     //move painting to new location
                     Random randme = new Random();
-                    paintings[subindex].image = paintingpicker();
-                    int newx = (int) randme.nextInt(screenWidth - subsprite.image.getWidth() - 100);
-                    int newy = (int) randme.nextInt(screenHeight - subsprite.image.getHeight() - 10);
-                    paintings[subindex].x = newx;
-                    paintings[subindex].y = newy;
-                    subsprite = paintings[subindex];
+                    mPaintings[subindex].image = paintingpicker();
+                    int newx = (int) randme.nextInt(mScreenWidth - subsprite.image.getWidth() - 100);
+                    int newy = (int) randme.nextInt(mScreenHeight - subsprite.image.getHeight() - 10);
+                    mPaintings[subindex].x = newx;
+                    mPaintings[subindex].y = newy;
+                    subsprite = mPaintings[subindex];
                     Rect newrect = new Rect(subsprite.x, subsprite.y,
                             subsprite.x + subsprite.image.getWidth(),
                             subsprite.y + subsprite.image.getHeight());
 
                     //Test painting location to see if it overlaps.
                     int testflag = 0; //tell loop to end
-                    int testindex = 0; //increments for each painting tested. end loop if testloc > # of paintings
+                    int testindex = 0; //increments for each painting tested. end loop if testloc > # of mPaintings
                     do
                     {
                         if (testindex == subindex)
                         {
                             testindex++;
                         }
-                        if (testindex >= paintings.length)
+                        if (testindex >= mPaintings.length)
                         {
                             testindex = 0;
                             testflag = 1;
                         }
 
                         //current testing painting
-                        subsprite = paintings[testindex];
+                        subsprite = mPaintings[testindex];
                         Rect test = new Rect(subsprite.x, subsprite.y,
                                 subsprite.x + subsprite.image.getWidth(),
                                 subsprite.y + subsprite.image.getHeight());
@@ -378,11 +368,11 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
                             testindex = 0;
                             //move painting to new location
                             randme = new Random();
-                            newx = (int) randme.nextInt(screenWidth - subsprite.image.getWidth() - 100);
-                            newy = (int) randme.nextInt(screenHeight - subsprite.image.getHeight() - 10);
-                            paintings[subindex].x = newx;
-                            paintings[subindex].y = newy;
-                            subsprite = paintings[subindex];
+                            newx = (int) randme.nextInt(mScreenWidth - subsprite.image.getWidth() - 100);
+                            newy = (int) randme.nextInt(mScreenHeight - subsprite.image.getHeight() - 10);
+                            mPaintings[subindex].x = newx;
+                            mPaintings[subindex].y = newy;
+                            subsprite = mPaintings[subindex];
                             newrect = new Rect(subsprite.x, subsprite.y,
                                     subsprite.x + subsprite.image.getWidth(),
                                     subsprite.y + subsprite.image.getHeight());
@@ -409,11 +399,6 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
 
             sprite.x += movex;
             sprite.y += movey;
-            //sprite.x += (sprite.directionX * sprite.speed);
-            //sprite.y += (sprite.directionY * sprite.speed);
-            //x1 = (int) sensorEvent.values[1];
-            //y1 = (int) sensorEvent.values[2]; // tilt forward = negative
-            //z1 = (int) sensorEvent.values[0]; // tilt right = negative
         }
 
     }
@@ -421,29 +406,29 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
     protected void render(Canvas canvas)
     {
         canvas.drawColor(Color.WHITE);
-        for (int index = 0, length = sprites.length; index < length; index++)
+        for (int index = 0, length = mSprites.length; index < length; index++)
         {
             Paint p = null;
-            if (sprites[index].color != 0)
+            if (mSprites[index].color != 0)
             {
                 p = new Paint();
-                ColorFilter filter = new LightingColorFilter(sprites[index].color, 0);
+                ColorFilter filter = new LightingColorFilter(mSprites[index].color, 0);
                 p.setColorFilter(filter);
             }
 
-            canvas.drawBitmap(sprites[index].image, sprites[index].x, sprites[index].y, p);
+            canvas.drawBitmap(mSprites[index].image, mSprites[index].x, mSprites[index].y, p);
         }
-        for (int index = 0, length = paintings.length; index < length; index++)
+        for (int index = 0, length = mPaintings.length; index < length; index++)
         {
             Paint p = null;
-            if (paintings[index].color != 0)
+            if (mPaintings[index].color != 0)
             {
                 p = new Paint();
-                ColorFilter filter = new LightingColorFilter(paintings[index].color, 0);
+                ColorFilter filter = new LightingColorFilter(mPaintings[index].color, 0);
                 p.setColorFilter(filter);
             }
 
-            canvas.drawBitmap(paintings[index].image, paintings[index].x, paintings[index].y, p);
+            canvas.drawBitmap(mPaintings[index].image, mPaintings[index].x, mPaintings[index].y, p);
         }
 
         Paint textPaint = new Paint();
@@ -462,10 +447,10 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
     @Override
     public void run()
     {
-        while (isRunning)
+        while (mIsRunning)
         {
             // We need to make sure that the surface is ready
-            if (!holder.getSurface().isValid())
+            if (!mHolder.getSurface().isValid())
             {
                 continue;
             }
@@ -474,11 +459,11 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
             // update
             step();
             // draw
-            Canvas canvas = holder.lockCanvas();
+            Canvas canvas = mHolder.lockCanvas();
             if (canvas != null)
             {
                 render(canvas);
-                holder.unlockCanvasAndPost(canvas);
+                mHolder.unlockCanvasAndPost(canvas);
             }
 
             float deltaTime = (System.currentTimeMillis() - started);
@@ -487,7 +472,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable, SensorEven
             {
                 try
                 {
-                    gameThread.sleep(sleepTime);
+                    mGameThread.sleep(sleepTime);
                 } catch (InterruptedException e)
                 {
                 }
